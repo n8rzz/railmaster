@@ -6,5 +6,9 @@ services:
     image: postgres:latest
     ports:
       - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: railyard_local
     volumes:
-      - /.tmp/data/postgres:/data/postgres
+      - ./.tmp/data/postgres:/data/postgres
