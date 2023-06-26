@@ -7,7 +7,7 @@ import { PrismaService } from '../prisma/prisma.service';
 export class GameService {
   constructor(private readonly _prismaService: PrismaService) {}
   create(createGameDto: CreateGameDto) {
-    return 'This action adds a new game';
+    return this._prismaService.game.create({ data: createGameDto });
   }
 
   findAll() {
@@ -15,14 +15,17 @@ export class GameService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} game`;
+    return this._prismaService.game.findFirst({ where: { id } });
   }
 
   update(id: number, updateGameDto: UpdateGameDto) {
-    return `This action updates a #${id} game`;
+    return this._prismaService.game.update({
+      where: { id },
+      data: { ...updateGameDto },
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} game`;
+    return this._prismaService.game.delete({ where: { id } });
   }
 }
