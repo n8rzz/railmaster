@@ -12,9 +12,11 @@ export class UserService {
         id,
       },
     });
+
     if (!post) {
       throw new UserNotFoundException();
     }
+
     return post;
   }
 
