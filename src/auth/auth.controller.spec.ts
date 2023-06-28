@@ -1,18 +1,62 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { loginDtoMock } from './__mocks__/auth.mocks';
+import { UserService } from '../user/user.service';
+import { JwtService } from '@nestjs/jwt';
+import { PrismaService } from '../prisma/prisma.service';
+import { HttpStatus } from '@nestjs/common';
 
 describe('AuthController', () => {
-  let controller: AuthController;
+  let authController: AuthController;
+  let authService: AuthService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const moduleRef: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
+      providers: [
+        AuthService,
+        UserService,
+        JwtService,
+        {
+          provide: PrismaService,
+          useValue: () => {},
+        },
+      ],
     }).compile();
 
-    controller = module.get<AuthController>(AuthController);
+    authController = moduleRef.get<AuthController>(AuthController);
+    authService = moduleRef.get<AuthService>(AuthService);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  describe('login', () => {
+    it('should return the login result', async () => {
+      const expectedLoginResult = {
+        access_token: 'threeve',
+      };
+
+      jest.spyOn(authService, 'login').mockResolvedValue(expectedLoginResult);
+
+      const result = await authController.login(loginDtoMock);
+
+      expect(result).toEqual(expectedLoginResult);
+      expect(authService.login).toHaveBeenCalledWith(loginDtoMock.email, loginDtoMock.password);
+    });
+
+    it('should set the HTTP status code to 200', async () => {
+      const expectedLoginResult = {
+        access_token: 'threeve',
+      };
+
+      jest.spyOn(authService, 'login').mockResolvedValue(expectedLoginResult);
+
+      const response = (await authController.login(loginDtoMock)) as any;
+
+      expect(response.statusCode).toBe(HttpStatus.OK);
+    });
   });
 });
