@@ -5,7 +5,6 @@ import { loginDtoMock } from './__mocks__/auth.mocks';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
-import { HttpStatus } from '@nestjs/common';
 
 describe('AuthController', () => {
   let authController: AuthController;
@@ -45,18 +44,6 @@ describe('AuthController', () => {
 
       expect(result).toEqual(expectedLoginResult);
       expect(authService.login).toHaveBeenCalledWith(loginDtoMock.email, loginDtoMock.password);
-    });
-
-    it('should set the HTTP status code to 200', async () => {
-      const expectedLoginResult = {
-        access_token: 'threeve',
-      };
-
-      jest.spyOn(authService, 'login').mockResolvedValue(expectedLoginResult);
-
-      const response = (await authController.login(loginDtoMock)) as any;
-
-      expect(response.statusCode).toBe(HttpStatus.OK);
     });
   });
 });

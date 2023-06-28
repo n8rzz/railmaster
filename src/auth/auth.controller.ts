@@ -7,7 +7,7 @@ import { LoginDto } from './auth.types';
 export class AuthController {
   constructor(private readonly _authService: AuthService) {}
 
-  @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.CREATED)
   @Post('login')
   @Version(AppVersion.One)
   login(@Body() signInDto: LoginDto) {
