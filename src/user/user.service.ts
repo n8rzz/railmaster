@@ -7,17 +7,31 @@ export class UserService {
   constructor(private readonly _prismaService: PrismaService) {}
 
   async getUserById(id: number) {
-    const post = await this._prismaService.user.findUnique({
+    const user = await this._prismaService.user.findUnique({
       where: {
         id,
       },
     });
 
-    if (!post) {
+    if (!user) {
       throw new UserNotFoundException();
     }
 
-    return post;
+    return user;
+  }
+
+  async getUserByEmail(email: string) {
+    const user = await this._prismaService.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      throw new UserNotFoundException();
+    }
+
+    return user;
   }
 
   // update(id: number, updateUserDto: UpdateUserDto) {
