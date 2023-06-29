@@ -1,8 +1,9 @@
 import { PrismaClient } from '@prisma/client';
+import { UserDto } from '../src/user/dto/user.dto';
 
 const prisma = new PrismaClient();
 
-async function createUsers(): Promise<void> {
+async function createUsers(): Promise<{ bill: UserDto }> {
   const bill = await prisma.user.upsert({
     where: { email: 'bill.murray@example.com' },
     update: {},
@@ -14,24 +15,32 @@ async function createUsers(): Promise<void> {
   });
 
   console.log('Users:\n', bill);
+
+  return {
+    bill,
+  };
 }
 
-async function createGames(): Promise<void> {
+async function createGames(user: UserDto): Promise<void> {
   const game = await prisma.game.upsert({
-    where: { id: 1 },
+    where: { id: user.id },
     update: {},
     create: {
       name: 'laughing-toad',
+      userId: 1,
     },
   });
 
+  console.log('');
+  console.log('============= =============');
+  console.log('');
   console.log('GAMES:\n', { game });
 }
 
 async function main(): Promise<void> {
-  await createUsers();
+  const { bill } = await createUsers();
 
-  await Promise.all([createGames()]);
+  await Promise.all([createGames(bill)]);
 }
 main()
   .then(async () => prisma.$disconnect())

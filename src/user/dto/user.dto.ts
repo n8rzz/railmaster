@@ -1,7 +1,7 @@
-import { CreateGameDto } from './create-game.dto';
 import { IsNotEmpty, IsNumber } from 'class-validator';
+import { CreateUserDto } from './create-user.dto';
 
-export class UpdateGameDto extends CreateGameDto {
+export class UserDto extends CreateUserDto {
   @IsNumber()
   @IsNotEmpty()
   id: number;

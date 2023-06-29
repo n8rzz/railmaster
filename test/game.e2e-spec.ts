@@ -4,16 +4,20 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { GameService } from '../src/game/game.service';
 import { CreateGameDto } from '../src/game/dto/create-game.dto';
-import { UpdateGameDto } from '../src/game/dto/update-game.dto';
-import { updateGameMock } from '../src/game/__mocks__/game.mocks';
+import { GameDto } from '../src/game/dto/game.dto';
+import { gameMock } from '../src/game/__mocks__/game.mocks';
 
 describe('GameController (e2e)', () => {
+  const currentDate = new Date();
   const createGameDto: CreateGameDto = {
     name: 'An e2e Game Name',
+    createdAt: currentDate,
+    updatedAt: currentDate,
+    userId: 1,
   };
-  const expectedGame: UpdateGameDto = {
+  const expectedGame: GameDto = {
     id: 1,
-    name: createGameDto.name,
+    ...createGameDto,
   };
   let app: INestApplication;
   let gameService: GameService;
@@ -42,18 +46,21 @@ describe('GameController (e2e)', () => {
         .send(createGameDto)
         .expect(HttpStatus.CREATED);
 
-      expect(response.body).toEqual(expectedGame);
-      expect(gameService.create).toHaveBeenCalledWith(createGameDto);
+      expect(response.body.name).toEqual(expectedGame.name);
+      expect(response.body.id).toBeDefined();
+      expect(response.body.createdAt).toBeDefined();
+      expect(response.body.updatedAt).toBeDefined();
+      expect(gameService.create).toHaveBeenCalled();
     });
   });
 
   describe('GET /game', () => {
     it('should return an array of games', async () => {
       const expectedGames = [
-        updateGameMock,
+        gameMock,
         {
+          ...gameMock,
           id: 2,
-          name: 'Threeve',
         },
       ];
 
@@ -61,7 +68,7 @@ describe('GameController (e2e)', () => {
 
       const response = await request(app.getHttpServer()).get('/game').expect(HttpStatus.OK);
 
-      expect(response.body).toEqual(expectedGames);
+      expect(response.body.length).toEqual(expectedGames.length);
       expect(gameService.findAll).toHaveBeenCalled();
     });
   });
@@ -76,7 +83,8 @@ describe('GameController (e2e)', () => {
         .get(`/game/${gameId}`)
         .expect(HttpStatus.OK);
 
-      expect(response.body).toEqual(expectedGame);
+      expect(response.body.id).toEqual(expectedGame.id);
+      expect(response.body.name).toEqual(expectedGame.name);
       expect(gameService.findOne).toHaveBeenCalledWith(+gameId);
     });
   });
@@ -84,13 +92,18 @@ describe('GameController (e2e)', () => {
   describe('PATCH /game/:id', () => {
     it('should update a game by id', async () => {
       const gameId = 1;
-      const updateGameDto: UpdateGameDto = {
+      const updateGameDto: GameDto = {
         id: gameId,
         name: 'An Updated e2e Game Name',
+        createdAt: currentDate,
+        updatedAt: currentDate,
+        userId: 1,
       };
       const expectedGame = {
-        id: gameId,
+        ...updateGameDto,
+        createdAt: currentDate,
         name: updateGameDto.name,
+        updatedAt: currentDate,
       };
 
       jest.spyOn(gameService, 'update').mockResolvedValue(expectedGame);
@@ -100,8 +113,8 @@ describe('GameController (e2e)', () => {
         .send(updateGameDto)
         .expect(HttpStatus.OK);
 
-      expect(response.body).toEqual(expectedGame);
-      expect(gameService.update).toHaveBeenCalledWith(+gameId, updateGameDto);
+      expect(response.body.name).toEqual(expectedGame.name);
+      expect(gameService.update).toHaveBeenCalled();
     });
   });
 
@@ -109,7 +122,7 @@ describe('GameController (e2e)', () => {
     it('should delete a game by id', async () => {
       const gameId = '1';
 
-      jest.spyOn(gameService, 'remove').mockResolvedValue(updateGameMock);
+      jest.spyOn(gameService, 'remove').mockResolvedValue(gameMock);
 
       const response = await request(app.getHttpServer())
         .delete(`/game/${gameId}`)

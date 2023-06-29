@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
-import { UpdateGameDto } from './dto/update-game.dto';
+import { GameDto } from './dto/game.dto';
 import { AppVersion } from '../app.constants';
 
 @Controller('game')
@@ -38,7 +38,7 @@ export class GameController {
 
   @Patch(':id')
   @Version(AppVersion.One)
-  update(@Param('id') id: string, @Body() updateGameDto: UpdateGameDto) {
+  update(@Param('id') id: string, @Body() updateGameDto: GameDto) {
     return this.gameService.update(+id, updateGameDto);
   }
 

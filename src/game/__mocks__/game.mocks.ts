@@ -1,11 +1,17 @@
 import { CreateGameDto } from '../dto/create-game.dto';
-import { UpdateGameDto } from '../dto/update-game.dto';
+import { GameDto } from '../dto/game.dto';
 
 export const createGameMock: CreateGameDto = {
+  userId: 1,
   name: 'Pilot Wings',
+  createdAt: new Date(),
+  updatedAt: new Date(),
 };
 
-export const updateGameMock: UpdateGameDto = {
+export const gameMock: GameDto = {
   id: 1,
+  userId: 1,
+  createdAt: new Date(),
   name: 'Starfox',
+  updatedAt: new Date(),
 };

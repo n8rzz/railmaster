@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateGameDto } from './dto/create-game.dto';
-import { UpdateGameDto } from './dto/update-game.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { CreateGameDto } from './dto/create-game.dto';
+import { GameDto } from './dto/game.dto';
 
 @Injectable()
 export class GameService {
@@ -18,7 +18,7 @@ export class GameService {
     return this._prismaService.game.findUnique({ where: { id } });
   }
 
-  update(id: number, updateGameDto: UpdateGameDto) {
+  update(id: number, updateGameDto: GameDto) {
     return this._prismaService.game.update({
       where: { id },
       data: { ...updateGameDto },
