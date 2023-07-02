@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
@@ -8,18 +9,29 @@ import { IJwtResponse } from './auth.types';
 export class AuthService {
   constructor(private _userService: UserService, private readonly _jwtService: JwtService) {}
 
-  public async login(username: string, pass: string): Promise<IJwtResponse> {
-    const user = await this._userService.getUserByEmail(username);
+  public async login(username: string, plainTextPassword: string): Promise<IJwtResponse> {
+    try {
+      const user = await this._userService.getUserByEmail(username);
 
-    if (user?.password !== pass) {
+      await this._verifyPassword(plainTextPassword, user.password);
+
+      const payload = { id: user.id, username: user.email };
+      const access_token = await this._jwtService.signAsync(payload);
+
+      return {
+        access_token,
+        permissions: [],
+      };
+    } catch (error) {
       throw new UnauthorizedException();
     }
+  }
 
-    const payload = { sub: user.id, username: user.email };
-    const access_token = await this._jwtService.signAsync(payload);
+  private async _verifyPassword(plainTextPassword: string, hashedPassword: string): Promise<void> {
+    const isPasswordMatching = await bcrypt.compare(plainTextPassword, hashedPassword);
 
-    return {
-      access_token,
-    };
+    if (!isPasswordMatching) {
+      throw new UnauthorizedException();
+    }
   }
 }

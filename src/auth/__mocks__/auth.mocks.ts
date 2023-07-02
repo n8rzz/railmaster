@@ -1,4 +1,4 @@
-import { LoginDto } from '../auth.types';
+import { LoginDto } from '../dto/login.dto';
 
 export const loginDtoMock: LoginDto = {
   email: 'wes.anderson@movies.com',

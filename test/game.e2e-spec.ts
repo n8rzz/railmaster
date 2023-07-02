@@ -11,13 +11,13 @@ describe('GameController (e2e)', () => {
   const currentDate = new Date();
   const createGameDto: CreateGameDto = {
     name: 'An e2e Game Name',
-    createdAt: currentDate,
-    updatedAt: currentDate,
     userId: 1,
   };
   const expectedGame: GameDto = {
-    id: 1,
     ...createGameDto,
+    id: 1,
+    createdAt: currentDate,
+    updatedAt: currentDate,
   };
   let app: INestApplication;
   let gameService: GameService;

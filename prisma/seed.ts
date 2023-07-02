@@ -1,15 +1,18 @@
 import { PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 import { UserDto } from '../src/user/dto/user.dto';
 
 const prisma = new PrismaClient();
 
 async function createUsers(): Promise<{ bill: UserDto }> {
+  const plaintextPwd = 'shark1';
+  const hashedPwd = await bcrypt.hash(plaintextPwd, 10);
   const bill = await prisma.user.upsert({
     where: { email: 'bill.murray@example.com' },
     update: {},
     create: {
       email: 'bill.murray@example.com',
-      password: 'shark1',
+      password: hashedPwd,
       username: 'bill.murray',
     },
   });
