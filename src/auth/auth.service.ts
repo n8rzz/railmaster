@@ -3,20 +3,18 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import { UnauthorizedException } from './unauthorized.exception';
-import { IJwtResponse } from './auth.types';
+import { IJwtAccessTokenFields, IJwtResponse } from './auth.types';
+import { User } from '../user/entity/user.entity';
 
 @Injectable()
 export class AuthService {
   constructor(private _userService: UserService, private readonly _jwtService: JwtService) {}
 
-  public async login(username: string, plainTextPassword: string): Promise<IJwtResponse> {
+  public async login(email: string, plainTextPassword: string): Promise<IJwtResponse> {
     try {
-      const user = await this._userService.getUserByEmail(username);
-
-      await this._verifyPassword(plainTextPassword, user.password);
-
-      const payload = { id: user.id, username: user.email };
-      const access_token = await this._jwtService.signAsync(payload);
+      const user = await this.validateUser(email, plainTextPassword);
+      const tokenPayload = this._buildAccessTokenPayload(user);
+      const access_token = await this._jwtService.signAsync(tokenPayload);
 
       return {
         access_token,
@@ -25,6 +23,21 @@ export class AuthService {
     } catch (error) {
       throw new UnauthorizedException();
     }
+  }
+
+  public async validateUser(email: string, plainTextPassword: string): Promise<User> {
+    const user = await this._userService.getUserByEmail(email);
+
+    await this._verifyPassword(plainTextPassword, user.password);
+
+    return user;
+  }
+
+  private _buildAccessTokenPayload(user: User): IJwtAccessTokenFields {
+    return {
+      email: user.email,
+      id: user.id,
+    };
   }
 
   private async _verifyPassword(plainTextPassword: string, hashedPassword: string): Promise<void> {
