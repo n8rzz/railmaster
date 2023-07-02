@@ -1,7 +1,8 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, Version } from '@nestjs/common';
 import { AppVersion } from '../app.constants';
 import { AuthService } from './auth.service';
-import { LoginDto } from './auth.types';
+import { LoginDto } from './dto/login.dto';
+import { IJwtResponse } from './auth.types';
 
 @Controller('auth')
 export class AuthController {
@@ -10,7 +11,7 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   @Post('login')
   @Version(AppVersion.One)
-  login(@Body() signInDto: LoginDto) {
+  login(@Body() signInDto: LoginDto): Promise<IJwtResponse> {
     return this._authService.login(signInDto.email, signInDto.password);
   }
 }

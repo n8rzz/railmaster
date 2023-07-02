@@ -1,5 +1,4 @@
-import { IsArray, IsDate, IsNotEmpty, IsString, MinLength } from 'class-validator';
-import { GameDto } from '../../game/dto/game.dto';
+import { IsDate, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsDate()
@@ -9,9 +8,9 @@ export class CreateUserDto {
   @IsNotEmpty()
   email: string;
 
-  @IsArray()
-  @IsNotEmpty()
-  games: GameDto[];
+  // @IsArray()
+  // @IsNotEmpty()
+  // games: GameDto[];
 
   @IsString()
   @IsNotEmpty()
