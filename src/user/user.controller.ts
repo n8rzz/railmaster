@@ -1,16 +1,17 @@
-import { Controller, Get, Request, UseGuards, Version } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards, Version } from '@nestjs/common';
 import { UserService } from './user.service';
-import { AuthGuard } from '../auth/auth.guard';
 import { AppVersion } from '../app.constants';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RequestWithUser } from '../auth/auth.types';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('profile')
   @Version(AppVersion.One)
-  getProfile(@Request() req: { user: unknown }) {
+  profile(@Req() req: RequestWithUser) {
     return req.user;
   }
 
