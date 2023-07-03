@@ -6,6 +6,8 @@ import { GameService } from '../src/game/game.service';
 import { CreateGameDto } from '../src/game/dto/create-game.dto';
 import { GameDto } from '../src/game/dto/game.dto';
 import { gameMock } from '../src/game/__mocks__/game.mocks';
+import { JwtAuthGuard } from '../src/auth/jwt-auth.guard';
+import { AuthGuardMock } from '../src/auth/__mocks__/auth.guard.mock';
 
 describe('GameController (e2e)', () => {
   const currentDate = new Date();
@@ -25,7 +27,10 @@ describe('GameController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider(JwtAuthGuard)
+      .useClass(AuthGuardMock)
+      .compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();

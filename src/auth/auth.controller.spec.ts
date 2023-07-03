@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { loginDtoMock } from './__mocks__/auth.mocks';
+import { requestWithUserMock } from './__mocks__/auth.mocks';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
+import { IJwtResponse } from './auth.types';
 
 describe('AuthController', () => {
   let authController: AuthController;
@@ -34,16 +35,16 @@ describe('AuthController', () => {
 
   describe('login', () => {
     it('should return the login result', async () => {
-      const expectedLoginResult = {
+      const expectedLoginResult: IJwtResponse = {
         access_token: 'threeve',
+        permissions: [],
       };
 
       jest.spyOn(authService, 'login').mockResolvedValue(expectedLoginResult);
 
-      const result = await authController.login(loginDtoMock);
+      const result = await authController.login(requestWithUserMock);
 
       expect(result).toEqual(expectedLoginResult);
-      expect(authService.login).toHaveBeenCalledWith(loginDtoMock.email, loginDtoMock.password);
     });
   });
 });

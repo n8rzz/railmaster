@@ -34,8 +34,9 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     AppService,
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard,
+      useExisting: JwtAuthGuard,
     },
+    JwtAuthGuard,
   ],
 })
 export class AppModule {}

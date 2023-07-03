@@ -6,20 +6,6 @@ import { UserNotFoundException } from './user-not-found.exception';
 export class UserService {
   constructor(private readonly _prismaService: PrismaService) {}
 
-  async getUserById(id: number) {
-    const user = await this._prismaService.user.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!user) {
-      throw new UserNotFoundException();
-    }
-
-    return user;
-  }
-
   async getUserByEmail(email: string) {
     const user = await this._prismaService.user.findUnique({
       where: {
@@ -33,12 +19,4 @@ export class UserService {
 
     return user;
   }
-
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
-  //
-  // remove(id: number) {
-  //   return `This action removes a #${id} user`;
-  // }
 }
