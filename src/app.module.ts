@@ -18,6 +18,8 @@ import * as Joi from '@hapi/joi';
         DB_PORT: Joi.number(),
         DB_HOST: Joi.string(),
         DATABASE_URL: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
+        JWT_EXPIRATION: Joi.string().required(),
       }),
     }),
     PrismaModule,

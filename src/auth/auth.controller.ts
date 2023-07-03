@@ -12,11 +12,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   @Version(AppVersion.One)
-  login(@Req() request: RequestWithUser) {
-    // return this._authService.login(signInDto.email, signInDto.password);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...user } = request.user;
-
-    return user;
+  login(@Req() req: RequestWithUser) {
+    return this._authService.login(req.user);
   }
 }

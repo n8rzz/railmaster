@@ -10,9 +10,8 @@ import { User } from '../user/entity/user.entity';
 export class AuthService {
   constructor(private _userService: UserService, private readonly _jwtService: JwtService) {}
 
-  public async login(email: string, plainTextPassword: string): Promise<IJwtResponse> {
+  public async login(user: User): Promise<IJwtResponse> {
     try {
-      const user = await this.validateUser(email, plainTextPassword);
       const tokenPayload = this._buildAccessTokenPayload(user);
       const access_token = await this._jwtService.signAsync(tokenPayload);
 
