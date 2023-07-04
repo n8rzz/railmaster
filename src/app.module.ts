@@ -8,6 +8,7 @@ import * as Joi from '@hapi/joi';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { HealthModule } from './health/health.module';
+import { RailcarsModule } from './railcars/railcars.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { HealthModule } from './health/health.module';
     HealthModule,
     GameModule,
     UserModule,
+    RailcarsModule,
   ],
   providers: [
     {
