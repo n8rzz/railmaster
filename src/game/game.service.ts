@@ -6,6 +6,7 @@ import { GameDto } from './dto/game.dto';
 @Injectable()
 export class GameService {
   constructor(private readonly _prismaService: PrismaService) {}
+
   create(createGameDto: CreateGameDto) {
     return this._prismaService.game.create({ data: createGameDto });
   }

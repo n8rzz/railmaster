@@ -17,6 +17,7 @@ async function bootstrap() {
     .setTitle('Railmaster API')
     .setDescription('The railmaster API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
 
