@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Version } from '@nestjs/common';
 import { RailcarsService } from './railcars.service';
 import { CreateRailcarDto } from './dto/create-railcar.dto';
-import { UpdateRailcarDto } from './dto/update-railcar.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { RailcarDto } from './dto/update-railcar.dto';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiTagName } from '../swagger/swagger.constants';
 import { AppVersion } from '../app.constants';
 
@@ -14,12 +14,18 @@ export class RailcarsController {
 
   @Post()
   @Version(AppVersion.One)
+  @Version(AppVersion.One)
+  @ApiOperation({ summary: 'Create Railcar' })
+  @ApiParam(CreateRailcarDto)
+  @ApiResponse({ status: 201, description: 'Created', type: RailcarDto })
   create(@Body() createRailcarDto: CreateRailcarDto) {
     return this._railcarsService.create(createRailcarDto);
   }
 
   @Get()
   @Version(AppVersion.One)
+  @ApiOperation({ summary: 'List Railcars' })
+  @ApiResponse({ status: 200, description: 'Railcar List' })
   findAll() {
     return this._railcarsService.findAll();
   }
@@ -32,7 +38,7 @@ export class RailcarsController {
 
   @Patch(':id')
   @Version(AppVersion.One)
-  update(@Param('id') id: string, @Body() updateRailcarDto: UpdateRailcarDto) {
+  update(@Param('id') id: string, @Body() updateRailcarDto: RailcarDto) {
     return this._railcarsService.update(+id, updateRailcarDto);
   }
 

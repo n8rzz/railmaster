@@ -4,6 +4,6 @@ import { RailcarsController } from './railcars.controller';
 
 @Module({
   controllers: [RailcarsController],
-  providers: [RailcarsService]
+  providers: [RailcarsService],
 })
 export class RailcarsModule {}
