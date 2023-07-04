@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { GameModule } from './game/game.module';
@@ -9,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -26,12 +25,11 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     }),
     PrismaModule,
     AuthModule,
+    HealthModule,
     GameModule,
     UserModule,
   ],
-  controllers: [AppController],
   providers: [
-    AppService,
     {
       provide: APP_GUARD,
       useExisting: JwtAuthGuard,
