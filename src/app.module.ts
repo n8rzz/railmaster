@@ -25,9 +25,9 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
       }),
     }),
     PrismaModule,
-    UserModule,
-    GameModule,
     AuthModule,
+    GameModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [
