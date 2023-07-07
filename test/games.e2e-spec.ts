@@ -2,12 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { GamesService } from '../src/game/games.service';
-import { CreateGameDto } from '../src/game/dto/create-game.dto';
-import { GameDto } from '../src/game/dto/game.dto';
-import { gameMock } from '../src/game/__mocks__/game.mocks';
-import { JwtAuthGuard } from '../src/auth/jwt-auth.guard';
-import { AuthGuardMock } from '../src/auth/__mocks__/auth.guard.mock';
+import { GamesService } from '../src/domain/game/games.service';
+import { CreateGameDto } from '../src/domain/game/dto/create-game.dto';
+import { GameDto } from '../src/domain/game/dto/game.dto';
+import { gameMock } from '../src/domain/game/__mocks__/game.mocks';
+import { JwtAuthGuard } from '../src/domain/auth/jwt-auth.guard';
+import { AuthGuardMock } from '../src/domain/auth/__mocks__/auth.guard.mock';
 
 describe('GamesController (e2e)', () => {
   const currentDate = new Date();

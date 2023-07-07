@@ -2,12 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { JwtAuthGuard } from '../src/auth/jwt-auth.guard';
-import { AuthGuardMock } from '../src/auth/__mocks__/auth.guard.mock';
-import { CreateRailcarDto } from '../src/railcars/dto/create-railcar.dto';
-import { RailcarDto } from '../src/railcars/dto/update-railcar.dto';
-import { RailcarsService } from '../src/railcars/railcars.service';
-import { railcarMock } from '../src/railcars/__mocks__/railcar.mocks';
+import { JwtAuthGuard } from '../src/domain/auth/jwt-auth.guard';
+import { AuthGuardMock } from '../src/domain/auth/__mocks__/auth.guard.mock';
+import { CreateRailcarDto } from '../src/domain/railcars/dto/create-railcar.dto';
+import { RailcarDto } from '../src/domain/railcars/dto/update-railcar.dto';
+import { RailcarsService } from '../src/domain/railcars/railcars.service';
+import { railcarMock } from '../src/domain/railcars/__mocks__/railcar.mocks';
 
 describe('RailcarsController (e2e)', () => {
   const currentDate = new Date();

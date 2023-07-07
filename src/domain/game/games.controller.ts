@@ -12,9 +12,9 @@ import {
 import { GamesService } from './games.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { GameDto } from './dto/game.dto';
-import { AppVersion } from '../app.constants';
+import { AppVersion } from '../../app.constants';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ApiTagName } from '../swagger/swagger.constants';
+import { ApiTagName } from '../../swagger/swagger.constants';
 
 @ApiBearerAuth()
 @ApiTags(ApiTagName.Games)
