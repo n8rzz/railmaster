@@ -3,7 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { UserNotFoundException } from './user-not-found.exception';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(private readonly _prismaService: PrismaService) {}
 
   async getUserByEmail(email: string) {
