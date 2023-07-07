@@ -1,7 +1,7 @@
 export enum ApiTagName {
   Auth = 'auth',
-  Game = 'game',
+  Games = 'games',
   Health = 'health',
   Railcars = 'railcars',
-  User = 'user',
+  Users = 'users',
 }

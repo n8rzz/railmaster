@@ -1,14 +1,14 @@
 import * as bcrypt from 'bcrypt';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from '../user/user.service';
+import { UsersService } from '../user/users.service';
 import { UnauthorizedException } from './unauthorized.exception';
 import { IJwtAccessTokenFields, IJwtResponse } from './auth.types';
 import { User } from '../user/entity/user.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(private _userService: UserService, private readonly _jwtService: JwtService) {}
+  constructor(private _userService: UsersService, private readonly _jwtService: JwtService) {}
 
   public async login(user: User): Promise<IJwtResponse> {
     try {

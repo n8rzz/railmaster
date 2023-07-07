@@ -1,5 +1,5 @@
 import { Controller, Get, Req, Version } from '@nestjs/common';
-import { UserService } from './user.service';
+import { UsersService } from './users.service';
 import { AppVersion } from '../app.constants';
 import { RequestWithUser } from '../auth/auth.types';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -7,10 +7,10 @@ import { ApiTagName } from '../swagger/swagger.constants';
 import { UserDto } from './dto/user.dto';
 
 @ApiBearerAuth()
-@ApiTags(ApiTagName.User)
-@Controller('user')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+@ApiTags(ApiTagName.Users)
+@Controller('users')
+export class UsersController {
+  constructor(private readonly userService: UsersService) {}
 
   @Get('profile')
   @Version(AppVersion.One)
