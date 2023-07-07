@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
-import { GameModule } from './game/game.module';
+import { GamesModule } from './game/games.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
@@ -27,7 +27,7 @@ import { RailcarsModule } from './railcars/railcars.module';
     PrismaModule,
     AuthModule,
     HealthModule,
-    GameModule,
+    GamesModule,
     UserModule,
     RailcarsModule,
   ],

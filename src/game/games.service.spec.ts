@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../prisma/prisma.service';
 import { createGameMock, gameMock } from './__mocks__/game.mocks';
-import { GameService } from './game.service';
+import { GamesService } from './games.service';
 
-describe('GameService', () => {
-  let gameService: GameService;
+describe('GamesService', () => {
+  let gamesService: GamesService;
   let prismaService: PrismaService;
 
   beforeEach(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
-      providers: [GameService, PrismaService],
+      providers: [GamesService, PrismaService],
     }).compile();
 
-    gameService = moduleRef.get<GameService>(GameService);
+    gamesService = moduleRef.get<GamesService>(GamesService);
     prismaService = moduleRef.get<PrismaService>(PrismaService);
   });
 
@@ -24,7 +24,7 @@ describe('GameService', () => {
     it('should create a game', async () => {
       jest.spyOn(prismaService.game, 'create').mockResolvedValue(gameMock);
 
-      const result = await gameService.create(createGameMock);
+      const result = await gamesService.create(createGameMock);
 
       expect(result).toEqual(gameMock);
       expect(prismaService.game.create).toHaveBeenCalledWith({ data: createGameMock });
@@ -41,7 +41,7 @@ describe('GameService', () => {
     it('should return an array of games', async () => {
       jest.spyOn(prismaService.game, 'findMany').mockResolvedValue([gameMock]);
 
-      const result = await gameService.findAll();
+      const result = await gamesService.findAll();
 
       expect(result).toEqual([gameMock]);
       expect(prismaService.game.findMany).toHaveBeenCalled();
@@ -53,7 +53,7 @@ describe('GameService', () => {
       const gameId = gameMock.id;
       jest.spyOn(prismaService.game, 'findUnique').mockResolvedValue(gameMock);
 
-      const result = await gameService.findOne(gameId);
+      const result = await gamesService.findOne(gameId);
 
       expect(result).toEqual(gameMock);
       expect(prismaService.game.findUnique).toHaveBeenCalledWith({ where: { id: gameId } });
@@ -66,7 +66,7 @@ describe('GameService', () => {
 
       jest.spyOn(prismaService.game, 'update').mockResolvedValue(gameMock);
 
-      const result = await gameService.update(gameId, gameMock);
+      const result = await gamesService.update(gameId, gameMock);
 
       expect(result).toEqual(gameMock);
       expect(prismaService.game.update).toHaveBeenCalledWith({
@@ -82,7 +82,7 @@ describe('GameService', () => {
 
       jest.spyOn(prismaService.game, 'delete').mockResolvedValue(gameMock);
 
-      const result = await gameService.remove(gameId);
+      const result = await gamesService.remove(gameId);
 
       expect(result).toEqual(gameMock);
       expect(prismaService.game.delete).toHaveBeenCalledWith({ where: { id: gameId } });
