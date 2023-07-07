@@ -30,7 +30,7 @@ describe('RailcarsController', () => {
   });
 
   describe('create', () => {
-    it('should create a game', async () => {
+    it('should create a Railcar', async () => {
       jest.spyOn(railcarService, 'create').mockResolvedValue(railcarMock);
 
       const result = await railcarsController.create(createRailcarMock);
@@ -41,7 +41,7 @@ describe('RailcarsController', () => {
   });
 
   describe('findAll', () => {
-    it('should return an array of games', async () => {
+    it('should return an array of Railcars', async () => {
       jest.spyOn(railcarService, 'findAll').mockResolvedValue([railcarMock]);
 
       const result = await railcarsController.findAll();
@@ -52,7 +52,7 @@ describe('RailcarsController', () => {
   });
 
   describe('findOne', () => {
-    it('should return a game by id', async () => {
+    it('should return a Railcar by id', async () => {
       jest.spyOn(railcarService, 'findOne').mockResolvedValue(railcarMock);
 
       const result = await railcarsController.findOne(railcarId);
@@ -63,7 +63,7 @@ describe('RailcarsController', () => {
   });
 
   describe('update', () => {
-    it('should update a game by id', async () => {
+    it('should update a Railcar by id', async () => {
       jest.spyOn(railcarService, 'update').mockResolvedValue(railcarMock);
 
       const result = await railcarsController.update(railcarId, railcarMock);
@@ -74,7 +74,7 @@ describe('RailcarsController', () => {
   });
 
   describe('remove', () => {
-    it('should delete a game by id', async () => {
+    it('should delete a Railcar by id', async () => {
       jest.spyOn(railcarService, 'remove').mockResolvedValue(undefined as never);
 
       const result = await railcarsController.remove(railcarId);
