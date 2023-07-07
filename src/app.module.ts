@@ -9,6 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './domain/auth/jwt-auth.guard';
 import { HealthModule } from './domain/health/health.module';
 import { RailcarsModule } from './domain/railcars/railcars.module';
+import { EnginesModule } from './domain/engines/engines.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { RailcarsModule } from './domain/railcars/railcars.module';
     GamesModule,
     UsersModule,
     RailcarsModule,
+    EnginesModule,
   ],
   providers: [
     {
