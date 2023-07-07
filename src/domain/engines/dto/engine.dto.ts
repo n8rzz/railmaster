@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsNotEmpty, IsNumber } from 'class-validator';
 import { CreateEngineDto } from './create-engine.dto';
 
-export class UpdateEngineDto extends CreateEngineDto {
+export class EngineDto extends CreateEngineDto {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()

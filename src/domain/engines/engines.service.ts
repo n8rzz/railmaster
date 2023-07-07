@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEngineDto } from './dto/create-engine.dto';
-import { UpdateEngineDto } from './dto/update-engine.dto';
+import { EngineDto } from './dto/engine.dto';
 
 @Injectable()
 export class EnginesService {
@@ -16,7 +16,7 @@ export class EnginesService {
     return `This action returns a #${id} engine`;
   }
 
-  update(id: number, updateEngineDto: UpdateEngineDto) {
+  update(id: number, updateEngineDto: EngineDto) {
     return `This action updates a #${id} engine`;
   }
 
