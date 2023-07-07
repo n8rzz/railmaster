@@ -1,11 +1,11 @@
 import { Controller, HttpCode, HttpStatus, Post, Req, UseGuards, Version } from '@nestjs/common';
-import { AppVersion } from '../app.constants';
+import { AppVersion } from '../../app.constants';
 import { AuthService } from './auth.service';
 import { RequestWithUser } from './auth.types';
 import { LocalAuthGuard } from './local-auth.guard';
-import { Public } from '../decorators/public.decorator';
+import { Public } from '../../decorators/public.decorator';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ApiTagName } from '../swagger/swagger.constants';
+import { ApiTagName } from '../../swagger/swagger.constants';
 
 @ApiBearerAuth()
 @ApiTags(ApiTagName.Auth)

@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule } from './prisma/prisma.module';
-import { UsersModule } from './user/users.module';
-import { GamesModule } from './game/games.module';
-import { AuthModule } from './auth/auth.module';
+import { PrismaModule } from './domain/prisma/prisma.module';
+import { UsersModule } from './domain/user/users.module';
+import { GamesModule } from './domain/game/games.module';
+import { AuthModule } from './domain/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
 import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { HealthModule } from './health/health.module';
-import { RailcarsModule } from './railcars/railcars.module';
+import { JwtAuthGuard } from './domain/auth/jwt-auth.guard';
+import { HealthModule } from './domain/health/health.module';
+import { RailcarsModule } from './domain/railcars/railcars.module';
 
 @Module({
   imports: [

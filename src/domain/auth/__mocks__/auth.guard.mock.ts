@@ -7,6 +7,7 @@ export class AuthGuardMock extends AuthGuard('jwt') {
     super();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canActivate(context: ExecutionContext) {
     return true;
   }

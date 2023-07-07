@@ -13,8 +13,8 @@ import { RailcarsService } from './railcars.service';
 import { CreateRailcarDto } from './dto/create-railcar.dto';
 import { RailcarDto } from './dto/update-railcar.dto';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ApiTagName } from '../swagger/swagger.constants';
-import { AppVersion } from '../app.constants';
+import { ApiTagName } from '../../swagger/swagger.constants';
+import { AppVersion } from '../../app.constants';
 import { GameDto } from '../game/dto/game.dto';
 
 @ApiBearerAuth()
