@@ -30,7 +30,7 @@ async function createGames(user: UserDto): Promise<void> {
     update: {},
     create: {
       name: 'laughing-toad',
-      userId: 1,
+      userId: user.id,
     },
   });
 
@@ -48,7 +48,7 @@ async function createRailcars(user: UserDto): Promise<void> {
       capacity_unit: 'gal',
       capacity_value: 250000,
       type: 'tank',
-      userId: 1,
+      userId: user.id,
     },
   });
 
@@ -58,10 +58,29 @@ async function createRailcars(user: UserDto): Promise<void> {
   console.log('RAILCARS:\n', { railcar });
 }
 
+async function createEngines(user: UserDto): Promise<void> {
+  const engine = await prisma.engine.upsert({
+    where: { id: user.id },
+    update: {},
+    create: {
+      fuelEfficiency: 10,
+      power: 4000,
+      status: 'active',
+      type: 'Diesel/Electric',
+      userId: user.id,
+    },
+  });
+
+  console.log('');
+  console.log('============= =============');
+  console.log('');
+  console.log('ENGINES:\n', { engine });
+}
+
 async function main(): Promise<void> {
   const { bill } = await createUsers();
 
-  await Promise.all([createGames(bill), createRailcars(bill)]);
+  await Promise.all([createGames(bill), createRailcars(bill), createEngines(bill)]);
 }
 main()
   .then(async () => prisma.$disconnect())

@@ -25,7 +25,6 @@ export class RailcarsController {
 
   @Post()
   @Version(AppVersion.One)
-  @Version(AppVersion.One)
   @ApiOperation({ summary: 'Create Railcar' })
   @ApiParam(CreateRailcarDto)
   @ApiResponse({ status: 201, description: 'Created', type: RailcarDto })
