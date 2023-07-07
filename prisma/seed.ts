@@ -40,10 +40,28 @@ async function createGames(user: UserDto): Promise<void> {
   console.log('GAMES:\n', { game });
 }
 
+async function createRailcars(user: UserDto): Promise<void> {
+  const railcar = await prisma.railcar.upsert({
+    where: { id: user.id },
+    update: {},
+    create: {
+      capacity_unit: 'gal',
+      capacity_value: 250000,
+      type: 'tank',
+      userId: 1,
+    },
+  });
+
+  console.log('');
+  console.log('============= =============');
+  console.log('');
+  console.log('RAILCARS:\n', { railcar });
+}
+
 async function main(): Promise<void> {
   const { bill } = await createUsers();
 
-  await Promise.all([createGames(bill)]);
+  await Promise.all([createGames(bill), createRailcars(bill)]);
 }
 main()
   .then(async () => prisma.$disconnect())
