@@ -9,10 +9,7 @@ describe('GameService', () => {
 
   beforeEach(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
-      providers: [
-        GameService,
-        PrismaService, // Add the PrismaService dependency
-      ],
+      providers: [GameService, PrismaService],
     }).compile();
 
     gameService = moduleRef.get<GameService>(GameService);
