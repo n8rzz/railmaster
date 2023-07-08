@@ -23,7 +23,7 @@ export class TrainsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTrainDto: TrainDto) {
+  update(@Param('id') id: string, @Body() updateTrainDto: Partial<TrainDto>) {
     return this.trainsService.update(+id, updateTrainDto);
   }
 

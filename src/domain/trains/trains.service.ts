@@ -19,10 +19,13 @@ export class TrainsService {
     return this._prismaService.train.findUnique({ where: { id } });
   }
 
-  update(id: number, updateTrainDto: TrainDto) {
+  update(id: number, updateTrainDto: Partial<TrainDto>) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { railcars, engines, ...trainToUpdate } = updateTrainDto;
+
     return this._prismaService.train.update({
       where: { id },
-      data: { ...updateTrainDto },
+      data: { ...trainToUpdate },
     });
   }
 

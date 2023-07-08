@@ -12,5 +12,7 @@ export const trainDtoMock: TrainDto = {
   ...createTrainDtoMock,
   id: 1,
   createdAt: new Date(),
+  engines: [],
+  railcars: [],
   updatedAt: new Date(),
 };

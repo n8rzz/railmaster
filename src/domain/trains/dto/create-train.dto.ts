@@ -12,13 +12,13 @@ export class CreateTrainDto {
   @ApiProperty()
   maxSpeed: number;
 
-  @IsNumber()
-  @IsNotEmpty()
-  @ApiProperty()
-  userId: number;
-
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
   status: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  userId: number;
 }
