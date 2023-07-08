@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { RailcarsService } from './railcars.service';
 import { CreateRailcarDto } from './dto/create-railcar.dto';
-import { RailcarDto } from './dto/update-railcar.dto';
+import { RailcarDto } from './dto/railcar.dto';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiTagName } from '../../swagger/swagger.constants';
 import { AppVersion } from '../../app.constants';

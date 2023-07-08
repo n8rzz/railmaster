@@ -1,28 +1,24 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateRailcarDto {
-  @IsString()
+export class CreateTrainDto {
+  @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
-  capacity_unit: string;
+  capacity: number;
 
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
-  capacity_value: number;
-
-  @IsNumber()
-  @ApiProperty({ required: false })
-  trainId?: number;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  type: string;
+  maxSpeed: number;
 
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
   userId: number;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  status: string;
 }

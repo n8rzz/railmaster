@@ -17,6 +17,9 @@ export class CreateEngineDto {
   @ApiProperty()
   public status: string;
 
+  @ApiProperty({ required: false })
+  trainId?: number;
+
   @IsString()
   @IsNotEmpty()
   @ApiProperty()

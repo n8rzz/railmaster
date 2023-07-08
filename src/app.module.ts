@@ -10,6 +10,7 @@ import { JwtAuthGuard } from './domain/auth/jwt-auth.guard';
 import { HealthModule } from './domain/health/health.module';
 import { RailcarsModule } from './domain/railcars/railcars.module';
 import { EnginesModule } from './domain/engines/engines.module';
+import { TrainsModule } from './domain/trains/trains.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { EnginesModule } from './domain/engines/engines.module';
     UsersModule,
     RailcarsModule,
     EnginesModule,
+    TrainsModule,
   ],
   providers: [
     {
