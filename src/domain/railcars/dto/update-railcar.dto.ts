@@ -8,9 +8,9 @@ export class RailcarDto extends CreateRailcarDto {
   @ApiProperty()
   id: number;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   createdAt: Date;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   updatedAt: Date;
 }

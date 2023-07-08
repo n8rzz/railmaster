@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
   @IsDate()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   createdAt: Date;
 
   @IsString()
@@ -18,7 +18,7 @@ export class CreateUserDto {
   password: string;
 
   @IsDate()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   updatedAt: Date;
 
   @IsString()
