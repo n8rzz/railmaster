@@ -29,7 +29,10 @@ describe('TrainsService', () => {
       const result = await trainsService.create(createTrainDtoMock);
 
       expect(result).toEqual(trainDtoMock);
-      expect(prismaService.train.create).toHaveBeenCalledWith({ data: createTrainDtoMock });
+      expect(prismaService.train.create).toHaveBeenCalledWith({
+        data: createTrainDtoMock,
+        include: { engines: true, railcars: true },
+      });
     });
   });
 
@@ -61,6 +64,7 @@ describe('TrainsService', () => {
       expect(result).toEqual(trainDtoMock);
       expect(prismaService.train.findUnique).toHaveBeenCalledWith({
         where: { id: trainIdMock },
+        include: { engines: true, railcars: true },
       });
     });
   });
@@ -86,6 +90,7 @@ describe('TrainsService', () => {
       expect(prismaService.train.update).toHaveBeenCalledWith({
         where: { id: trainIdMock },
         data: expectedCallSignature,
+        include: { engines: true, railcars: true },
       });
     });
   });
@@ -98,7 +103,9 @@ describe('TrainsService', () => {
       const result = await trainsService.remove(trainIdMock);
 
       expect(result).toEqual(trainDtoMock);
-      expect(prismaService.train.delete).toHaveBeenCalledWith({ where: { id: trainIdMock } });
+      expect(prismaService.train.delete).toHaveBeenCalledWith({
+        where: { id: trainIdMock },
+      });
     });
   });
 });

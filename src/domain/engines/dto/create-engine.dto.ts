@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Prisma } from '@prisma/client';
 
-export class CreateEngineDto {
+export class CreateEngineDto implements Prisma.EngineCreateInput {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
@@ -18,7 +19,7 @@ export class CreateEngineDto {
   public status: string;
 
   @ApiProperty({ required: false })
-  trainId?: number;
+  public trainId?: number;
 
   @IsString()
   @IsNotEmpty()
