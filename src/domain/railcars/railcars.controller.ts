@@ -16,6 +16,7 @@ import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@ne
 import { ApiTagName } from '../../swagger/swagger.constants';
 import { AppVersion } from '../../app.constants';
 import { GameDto } from '../game/dto/game.dto';
+import { Prisma } from '@prisma/client';
 
 @ApiBearerAuth()
 @ApiTags(ApiTagName.Railcars)
@@ -28,8 +29,8 @@ export class RailcarsController {
   @ApiOperation({ summary: 'Create Railcar' })
   @ApiParam(CreateRailcarDto)
   @ApiResponse({ status: 201, description: 'Created', type: RailcarDto })
-  create(@Body() createRailcarDto: CreateRailcarDto) {
-    return this._railcarsService.create(createRailcarDto);
+  create(@Body() createRailcarDto: Prisma.RailcarCreateInput) {
+    return this._railcarsService.create(createRailcarDto as never);
   }
 
   @Get()

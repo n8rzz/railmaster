@@ -71,10 +71,12 @@ describe('TrainsService', () => {
         ...trainDtoMock,
         maxSpeed: 100,
       };
-      const expectedRailcar = {
+      const expectedRailcar: TrainDto = {
         ...trainDtoMock,
         maxSpeed: updateTrainDto.maxSpeed,
       };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { engines, railcars, ...expectedCallSignature } = expectedRailcar;
 
       jest.spyOn(prismaService.train, 'update').mockResolvedValue(expectedRailcar as never);
 
@@ -83,7 +85,7 @@ describe('TrainsService', () => {
       expect(result).toEqual(expectedRailcar);
       expect(prismaService.train.update).toHaveBeenCalledWith({
         where: { id: trainIdMock },
-        data: updateTrainDto,
+        data: expectedCallSignature,
       });
     });
   });
