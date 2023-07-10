@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Engine, Game, PrismaClient, Railcar, Train, User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { UserDto } from '../src/domain/user/dto/user.dto';
 
@@ -24,7 +24,7 @@ async function createUsers(): Promise<{ bill: UserDto }> {
   };
 }
 
-async function createGames(user: UserDto): Promise<void> {
+async function createGames(user: UserDto): Promise<Game[]> {
   const game = await prisma.game.upsert({
     where: { id: user.id },
     update: {},
@@ -37,10 +37,12 @@ async function createGames(user: UserDto): Promise<void> {
   console.log('');
   console.log('============= =============');
   console.log('');
-  console.log('GAMES:\n', { game });
+  console.log('GAMES:\n', game);
+
+  return [game];
 }
 
-async function createRailcars(user: UserDto): Promise<void> {
+async function createRailcars(user: UserDto): Promise<Railcar[]> {
   const railcar = await prisma.railcar.upsert({
     where: { id: user.id },
     update: {},
@@ -55,10 +57,12 @@ async function createRailcars(user: UserDto): Promise<void> {
   console.log('');
   console.log('============= =============');
   console.log('');
-  console.log('RAILCARS:\n', { railcar });
+  console.log('RAILCARS:\n', railcar);
+
+  return [railcar];
 }
 
-async function createEngines(user: UserDto): Promise<void> {
+async function createEngines(user: UserDto): Promise<Engine[]> {
   const engine = await prisma.engine.upsert({
     where: { id: user.id },
     update: {},
@@ -74,13 +78,38 @@ async function createEngines(user: UserDto): Promise<void> {
   console.log('');
   console.log('============= =============');
   console.log('');
-  console.log('ENGINES:\n', { engine });
+  console.log('ENGINES:\n', engine);
+
+  return [engine];
+}
+async function createTrains(bill: User, railcars: Railcar[], engines: Engine[]): Promise<Train[]> {
+  const train = await prisma.train.upsert({
+    where: { id: bill.id },
+    update: {},
+    create: {
+      capacity: 100,
+      maxSpeed: 80,
+      status: 'parked',
+    },
+  });
+
+  console.log('');
+  console.log('============= =============');
+  console.log('');
+  console.log('TRAINS:\n', train);
+
+  return [train];
 }
 
 async function main(): Promise<void> {
   const { bill } = await createUsers();
 
-  await Promise.all([createGames(bill), createRailcars(bill), createEngines(bill)]);
+  const [_, railcars, engines] = await Promise.all([
+    createGames(bill),
+    createRailcars(bill),
+    createEngines(bill),
+  ]);
+  await createTrains(bill, railcars, engines);
 }
 main()
   .then(async () => prisma.$disconnect())

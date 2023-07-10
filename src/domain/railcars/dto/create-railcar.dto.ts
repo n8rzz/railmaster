@@ -1,24 +1,28 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Prisma } from '@prisma/client';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class CreateRailcarDto {
+export class CreateRailcarDto implements Prisma.RailcarCreateInput {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  capacity_unit: string;
+  public capacity_unit: string;
 
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
-  capacity_value: number;
+  public capacity_value: number;
+
+  @ApiProperty({ required: false })
+  public trainId?: number;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  type: string;
+  public type: string;
 
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
-  userId: number;
+  public userId: number;
 }

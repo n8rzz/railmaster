@@ -5,7 +5,7 @@ import { AppModule } from '../src/app.module';
 import { JwtAuthGuard } from '../src/domain/auth/jwt-auth.guard';
 import { AuthGuardMock } from '../src/domain/auth/__mocks__/auth.guard.mock';
 import { CreateRailcarDto } from '../src/domain/railcars/dto/create-railcar.dto';
-import { RailcarDto } from '../src/domain/railcars/dto/update-railcar.dto';
+import { RailcarDto } from '../src/domain/railcars/dto/railcar.dto';
 import { RailcarsService } from '../src/domain/railcars/railcars.service';
 import { railcarMock } from '../src/domain/railcars/__mocks__/railcar.mocks';
 
@@ -14,6 +14,7 @@ describe('RailcarsController (e2e)', () => {
   const createRailcarDto: CreateRailcarDto = {
     capacity_unit: 'gal',
     capacity_value: 10000,
+    trainId: undefined,
     type: 'tank',
     userId: 1,
   };
@@ -45,8 +46,8 @@ describe('RailcarsController (e2e)', () => {
   });
 
   describe('POST /railcars', () => {
-    it('should create a game', async () => {
-      jest.spyOn(railcarsService, 'create').mockResolvedValue(expectedRailcar);
+    it('should create a Railcar', async () => {
+      jest.spyOn(railcarsService, 'create').mockResolvedValue(expectedRailcar as never);
 
       const response = await request(app.getHttpServer())
         .post('/railcars')
@@ -61,7 +62,7 @@ describe('RailcarsController (e2e)', () => {
   });
 
   describe('GET /railcars', () => {
-    it('should return an array of games', async () => {
+    it('should return an array of Railcars', async () => {
       const expectedRailcars = [
         railcarMock,
         {
@@ -70,7 +71,7 @@ describe('RailcarsController (e2e)', () => {
         },
       ];
 
-      jest.spyOn(railcarsService, 'findAll').mockResolvedValue(expectedRailcars);
+      jest.spyOn(railcarsService, 'findAll').mockResolvedValue(expectedRailcars as never);
 
       const response = await request(app.getHttpServer()).get('/railcars').expect(HttpStatus.OK);
 
@@ -80,10 +81,10 @@ describe('RailcarsController (e2e)', () => {
   });
 
   describe('GET /railcars/:id', () => {
-    it('should return a game by id', async () => {
+    it('should return a Railcar by id', async () => {
       const railcarId = '1';
 
-      jest.spyOn(railcarsService, 'findOne').mockResolvedValue(expectedRailcar);
+      jest.spyOn(railcarsService, 'findOne').mockResolvedValue(expectedRailcar as never);
 
       const response = await request(app.getHttpServer())
         .get(`/railcars/${railcarId}`)
@@ -95,7 +96,7 @@ describe('RailcarsController (e2e)', () => {
   });
 
   describe('PATCH /railcars/:id', () => {
-    it('should update a game by id', async () => {
+    it('should update a Railcar by id', async () => {
       const railcarId = 1;
       const updateRailcarDto: RailcarDto = {
         ...railcarMock,
@@ -106,7 +107,7 @@ describe('RailcarsController (e2e)', () => {
         capacity_unit: updateRailcarDto.capacity_unit,
       };
 
-      jest.spyOn(railcarsService, 'update').mockResolvedValue(expectedRailcar);
+      jest.spyOn(railcarsService, 'update').mockResolvedValue(expectedRailcar as never);
 
       const response = await request(app.getHttpServer())
         .patch(`/railcars/${railcarId}`)
@@ -119,10 +120,10 @@ describe('RailcarsController (e2e)', () => {
   });
 
   describe('DELETE /railcars/:id', () => {
-    it('should delete a game by id', async () => {
+    it('should delete a Railcar by id', async () => {
       const railcarId = '1';
 
-      jest.spyOn(railcarsService, 'remove').mockResolvedValue(railcarMock);
+      jest.spyOn(railcarsService, 'remove').mockResolvedValue(railcarMock as never);
 
       const response = await request(app.getHttpServer())
         .delete(`/railcars/${railcarId}`)

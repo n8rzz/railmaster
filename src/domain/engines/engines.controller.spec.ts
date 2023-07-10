@@ -26,7 +26,7 @@ describe('EnginesController', () => {
 
   describe('create', () => {
     it('should create a Railcar', async () => {
-      jest.spyOn(service, 'create').mockResolvedValue(engineMock);
+      jest.spyOn(service, 'create').mockResolvedValue(engineMock as never);
 
       const result = await controller.create(createEngineMock);
 
@@ -37,7 +37,7 @@ describe('EnginesController', () => {
 
   describe('findAll', () => {
     it('should return an array of Railcars', async () => {
-      jest.spyOn(service, 'findAll').mockResolvedValue([engineMock]);
+      jest.spyOn(service, 'findAll').mockResolvedValue([engineMock] as never);
 
       const result = await controller.findAll();
 
@@ -48,7 +48,7 @@ describe('EnginesController', () => {
 
   describe('findOne', () => {
     it('should return a Railcar by id', async () => {
-      jest.spyOn(service, 'findOne').mockResolvedValue(engineMock);
+      jest.spyOn(service, 'findOne').mockResolvedValue(engineMock as never);
 
       const result = await controller.findOne(engineIdMock);
 
@@ -59,7 +59,7 @@ describe('EnginesController', () => {
 
   describe('update', () => {
     it('should update a Railcar by id', async () => {
-      jest.spyOn(service, 'update').mockResolvedValue(engineMock);
+      jest.spyOn(service, 'update').mockResolvedValue(engineMock as never);
 
       const result = await controller.update(engineIdMock, engineMock);
 

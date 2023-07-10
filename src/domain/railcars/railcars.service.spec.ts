@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RailcarsService } from './railcars.service';
 import { PrismaService } from '../prisma/prisma.service';
-import { RailcarDto } from './dto/update-railcar.dto';
+import { RailcarDto } from './dto/railcar.dto';
 import { createRailcarMock, railcarMock } from './__mocks__/railcar.mocks';
 
 describe('RailcarsService', () => {
@@ -24,7 +24,7 @@ describe('RailcarsService', () => {
 
   describe('create', () => {
     it('should create a railcar', async () => {
-      jest.spyOn(prismaService.railcar, 'create').mockResolvedValue(railcarMock);
+      jest.spyOn(prismaService.railcar, 'create').mockResolvedValue(railcarMock as never);
 
       const result = await railcarsService.create(createRailcarMock);
 
@@ -43,7 +43,7 @@ describe('RailcarsService', () => {
         },
       ];
 
-      jest.spyOn(prismaService.railcar, 'findMany').mockResolvedValue(expectedRailcars);
+      jest.spyOn(prismaService.railcar, 'findMany').mockResolvedValue(expectedRailcars as never);
 
       const result = await railcarsService.findAll();
 
@@ -54,7 +54,7 @@ describe('RailcarsService', () => {
 
   describe('findOne', () => {
     it('should return a railcar by id', async () => {
-      jest.spyOn(prismaService.railcar, 'findUnique').mockResolvedValue(railcarMock);
+      jest.spyOn(prismaService.railcar, 'findUnique').mockResolvedValue(railcarMock as never);
 
       const result = await railcarsService.findOne(railcarIdMock);
 
@@ -78,7 +78,7 @@ describe('RailcarsService', () => {
         capacity_value: updateRailcarDto.capacity_value,
       };
 
-      jest.spyOn(prismaService.railcar, 'update').mockResolvedValue(expectedRailcar);
+      jest.spyOn(prismaService.railcar, 'update').mockResolvedValue(expectedRailcar as never);
 
       const result = await railcarsService.update(railcarIdMock, updateRailcarDto);
 
@@ -92,8 +92,8 @@ describe('RailcarsService', () => {
 
   describe('remove', () => {
     it('should delete a railcar by id', async () => {
-      // jest.spyOn(prismaService.railcar, 'delete').mockResolvedValue({ id: railcarIdMock });
-      jest.spyOn(prismaService.railcar, 'delete').mockResolvedValue(railcarMock);
+      // jest.spyOn(prismaService.railcar, 'delete').mockResolvedValue({ id as never: railcarIdMock });
+      jest.spyOn(prismaService.railcar, 'delete').mockResolvedValue(railcarMock as never);
 
       const result = await railcarsService.remove(railcarIdMock);
 

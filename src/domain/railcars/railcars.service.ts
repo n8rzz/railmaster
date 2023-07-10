@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRailcarDto } from './dto/create-railcar.dto';
-import { RailcarDto } from './dto/update-railcar.dto';
+import { RailcarDto } from './dto/railcar.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { Railcar } from './entities/railcar.entity';
 

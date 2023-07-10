@@ -15,6 +15,7 @@ import { EngineDto } from './dto/engine.dto';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiTagName } from '../../swagger/swagger.constants';
 import { AppVersion } from '../../app.constants';
+import { Prisma } from '@prisma/client';
 
 @ApiBearerAuth()
 @ApiTags(ApiTagName.Engines)
@@ -28,8 +29,8 @@ export class EnginesController {
   @ApiParam(CreateEngineDto)
   @ApiResponse({ status: 201, description: 'Created', type: EngineDto })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  create(@Body() createEngineDto: CreateEngineDto) {
-    return this.enginesService.create(createEngineDto);
+  create(@Body() createEngineDto: Prisma.EngineCreateInput) {
+    return this.enginesService.create(createEngineDto as never);
   }
 
   @Get()
