@@ -7,9 +7,21 @@ import { TrainDto } from './dto/train.dto';
 export class TrainsService {
   constructor(private readonly _prismaService: PrismaService) {}
 
-  create(createTrainDto: CreateTrainDto) {
+  create(
+    createTrainDto: Omit<CreateTrainDto, 'engines' | 'railcars'>,
+    engineIds: { id: number }[] = [],
+    railcarIds: { id: number }[] = [],
+  ) {
     return this._prismaService.train.create({
-      data: createTrainDto,
+      data: {
+        ...createTrainDto,
+        engines: {
+          connect: engineIds,
+        },
+        railcars: {
+          connect: railcarIds,
+        },
+      },
       include: { engines: true, railcars: true },
     });
   }

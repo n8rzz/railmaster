@@ -29,7 +29,11 @@ export class TrainsController {
   @ApiResponse({ status: 201, description: 'Created', type: CreateTrainDto })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   create(@Body() createTrainDto: CreateTrainDto) {
-    return this.trainsService.create(createTrainDto);
+    const { engines = [], railcars = [], ...trainProps } = createTrainDto;
+    const engineIds = engines.map((id: number) => ({ id }));
+    const railcarIds = railcars.map((id: number) => ({ id }));
+
+    return this.trainsService.create(trainProps, engineIds, railcarIds);
   }
 
   @Get()

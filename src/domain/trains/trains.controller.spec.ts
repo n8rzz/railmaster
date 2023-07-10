@@ -31,7 +31,7 @@ describe('TrainsController', () => {
       const result = await controller.create(createTrainDtoMock);
 
       expect(result).toEqual(trainDtoMock);
-      expect(service.create).toHaveBeenCalledWith(createTrainDtoMock);
+      expect(service.create).toHaveBeenCalledWith(createTrainDtoMock, [], []);
     });
   });
 

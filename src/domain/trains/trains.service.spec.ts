@@ -30,7 +30,11 @@ describe('TrainsService', () => {
 
       expect(result).toEqual(trainDtoMock);
       expect(prismaService.train.create).toHaveBeenCalledWith({
-        data: createTrainDtoMock,
+        data: {
+          ...createTrainDtoMock,
+          engines: { connect: [] },
+          railcars: { connect: [] },
+        },
         include: { engines: true, railcars: true },
       });
     });

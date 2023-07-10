@@ -2,7 +2,7 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
 
-export class CreateTrainDto implements Prisma.TrainCreateInput {
+class PrimaCreateTrainDto implements Prisma.TrainCreateInput {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
@@ -22,4 +22,11 @@ export class CreateTrainDto implements Prisma.TrainCreateInput {
   @IsNotEmpty()
   @ApiProperty()
   userId: number;
+}
+export class CreateTrainDto extends PrimaCreateTrainDto {
+  @ApiProperty({ required: false })
+  engines?: number[];
+
+  @ApiProperty({ required: false })
+  railcars?: number[];
 }

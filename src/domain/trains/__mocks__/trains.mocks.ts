@@ -8,6 +8,12 @@ export const createTrainDtoMock: CreateTrainDto = {
   userId: 1,
 };
 
+export const createTrainWithAssociationsDtoMock: CreateTrainDto = {
+  ...createTrainDtoMock,
+  engines: [1],
+  railcars: [1],
+};
+
 export const trainDtoMock: TrainDto = {
   ...createTrainDtoMock,
   id: 1,

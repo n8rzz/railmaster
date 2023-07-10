@@ -22,6 +22,7 @@
     "pretest:all": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "ts": "tsc",
+    "ts:watch": "tsc --watch",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
