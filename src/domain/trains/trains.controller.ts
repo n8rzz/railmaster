@@ -26,7 +26,7 @@ export class TrainsController {
   @Version(AppVersion.One)
   @ApiOperation({ summary: 'Create Train' })
   @ApiParam(CreateTrainDto)
-  @ApiResponse({ status: 201, description: 'Created', type: CreateTrainDto })
+  @ApiResponse({ status: 201, description: 'Created', type: TrainDto })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   create(@Body() createTrainDto: CreateTrainDto) {
     const { engines = [], railcars = [], ...trainProps } = createTrainDto;

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../prisma/prisma.service';
 import { EnginesService } from './engines.service';
-import { createEngineMock, engineMock } from './__mocks__/engine.mocks';
+import { createEngineDtoMock, engineDtoMock } from './__mocks__/engine.mocks';
 import { EngineDto } from './dto/engine.dto';
 
 describe('EnginesService', () => {
@@ -24,21 +24,21 @@ describe('EnginesService', () => {
 
   describe('create', () => {
     it('should create a engine', async () => {
-      jest.spyOn(prismaService.engine, 'create').mockResolvedValue(engineMock as never);
+      jest.spyOn(prismaService.engine, 'create').mockResolvedValue(engineDtoMock as never);
 
-      const result = await enginesService.create(createEngineMock);
+      const result = await enginesService.create(createEngineDtoMock);
 
-      expect(result).toEqual(engineMock);
-      expect(prismaService.engine.create).toHaveBeenCalledWith({ data: createEngineMock });
+      expect(result).toEqual(engineDtoMock);
+      expect(prismaService.engine.create).toHaveBeenCalledWith({ data: createEngineDtoMock });
     });
   });
 
   describe('findAll', () => {
     it('should return an array of engines', async () => {
       const expectedEngines = [
-        engineMock,
+        engineDtoMock,
         {
-          ...engineMock,
+          ...engineDtoMock,
           id: 2,
         },
       ];
@@ -54,11 +54,11 @@ describe('EnginesService', () => {
 
   describe('findOne', () => {
     it('should return a engine by id', async () => {
-      jest.spyOn(prismaService.engine, 'findUnique').mockResolvedValue(engineMock as never);
+      jest.spyOn(prismaService.engine, 'findUnique').mockResolvedValue(engineDtoMock as never);
 
       const result = await enginesService.findOne(engineIdMock);
 
-      expect(result).toEqual(engineMock);
+      expect(result).toEqual(engineDtoMock);
       expect(prismaService.engine.findUnique).toHaveBeenCalledWith({
         where: { id: engineIdMock },
       });
@@ -68,11 +68,11 @@ describe('EnginesService', () => {
   describe('update', () => {
     it('should update a engine by id', async () => {
       const updateRailcarDto: EngineDto = {
-        ...engineMock,
+        ...engineDtoMock,
         power: 50,
       };
       const expectedEngine = {
-        ...engineMock,
+        ...engineDtoMock,
         power: updateRailcarDto.power,
       };
 
@@ -91,11 +91,11 @@ describe('EnginesService', () => {
   describe('remove', () => {
     it('should delete a engine by id', async () => {
       // jest.spyOn(prismaService.engine, 'delete').mockResolvedValue({ id: engineIdMock });
-      jest.spyOn(prismaService.engine, 'delete').mockResolvedValue(engineMock as never);
+      jest.spyOn(prismaService.engine, 'delete').mockResolvedValue(engineDtoMock as never);
 
       const result = await enginesService.remove(engineIdMock);
 
-      expect(result).toEqual(engineMock);
+      expect(result).toEqual(engineDtoMock);
       expect(prismaService.engine.delete).toHaveBeenCalledWith({ where: { id: engineIdMock } });
     });
   });

@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { createEngineMock, engineMock } from './__mocks__/engine.mocks';
+import { createEngineDtoMock, engineDtoMock } from './__mocks__/engine.mocks';
 import { EnginesController } from './engines.controller';
 import { EnginesService } from './engines.service';
 import { PrismaModule } from '../prisma/prisma.module';
@@ -26,45 +26,45 @@ describe('EnginesController', () => {
 
   describe('create', () => {
     it('should create a Railcar', async () => {
-      jest.spyOn(service, 'create').mockResolvedValue(engineMock as never);
+      jest.spyOn(service, 'create').mockResolvedValue(engineDtoMock as never);
 
-      const result = await controller.create(createEngineMock);
+      const result = await controller.create(createEngineDtoMock);
 
-      expect(result).toEqual(engineMock);
-      expect(service.create).toHaveBeenCalledWith(createEngineMock);
+      expect(result).toEqual(engineDtoMock);
+      expect(service.create).toHaveBeenCalledWith(createEngineDtoMock);
     });
   });
 
   describe('findAll', () => {
     it('should return an array of Railcars', async () => {
-      jest.spyOn(service, 'findAll').mockResolvedValue([engineMock] as never);
+      jest.spyOn(service, 'findAll').mockResolvedValue([engineDtoMock] as never);
 
       const result = await controller.findAll();
 
-      expect(result).toEqual([engineMock]);
+      expect(result).toEqual([engineDtoMock]);
       expect(service.findAll).toHaveBeenCalled();
     });
   });
 
   describe('findOne', () => {
     it('should return a Railcar by id', async () => {
-      jest.spyOn(service, 'findOne').mockResolvedValue(engineMock as never);
+      jest.spyOn(service, 'findOne').mockResolvedValue(engineDtoMock as never);
 
       const result = await controller.findOne(engineIdMock);
 
-      expect(result).toEqual(engineMock);
+      expect(result).toEqual(engineDtoMock);
       expect(service.findOne).toHaveBeenCalledWith(+engineIdMock);
     });
   });
 
   describe('update', () => {
     it('should update a Railcar by id', async () => {
-      jest.spyOn(service, 'update').mockResolvedValue(engineMock as never);
+      jest.spyOn(service, 'update').mockResolvedValue(engineDtoMock as never);
 
-      const result = await controller.update(engineIdMock, engineMock);
+      const result = await controller.update(engineIdMock, engineDtoMock);
 
-      expect(result).toEqual(engineMock);
-      expect(service.update).toHaveBeenCalledWith(+engineIdMock, engineMock);
+      expect(result).toEqual(engineDtoMock);
+      expect(service.update).toHaveBeenCalledWith(+engineIdMock, engineDtoMock);
     });
   });
 

@@ -1,7 +1,7 @@
 import { CreateEngineDto } from '../dto/create-engine.dto';
 import { EngineDto } from '../dto/engine.dto';
 
-export const createEngineMock: CreateEngineDto = {
+export const createEngineDtoMock: CreateEngineDto = {
   fuelEfficiency: 10,
   power: 4000,
   status: 'active',
@@ -9,8 +9,8 @@ export const createEngineMock: CreateEngineDto = {
   userId: 1,
 };
 
-export const engineMock: EngineDto = {
-  ...createEngineMock,
+export const engineDtoMock: EngineDto = {
+  ...createEngineDtoMock,
   id: 1,
   createdAt: new Date(),
   updatedAt: new Date(),

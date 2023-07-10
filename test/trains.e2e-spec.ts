@@ -78,22 +78,22 @@ describe('TrainsController (e2e)', () => {
 
   describe('GET /trains/:id', () => {
     it('should return a Train by id', async () => {
-      const railcarId = '1';
+      const trainId = '1';
 
       jest.spyOn(trainsService, 'findOne').mockResolvedValue(expectedRailcar as never);
 
       const response = await request(app.getHttpServer())
-        .get(`/trains/${railcarId}`)
+        .get(`/trains/${trainId}`)
         .expect(HttpStatus.OK);
 
       expect(response.body.id).toEqual(expectedRailcar.id);
-      expect(trainsService.findOne).toHaveBeenCalledWith(+railcarId);
+      expect(trainsService.findOne).toHaveBeenCalledWith(+trainId);
     });
   });
 
   describe('PATCH /trains/:id', () => {
     it('should update a Train by id', async () => {
-      const railcarId = 1;
+      const trainId = 1;
       const updateTrainDto: TrainDto = {
         ...trainDtoMock,
         maxSpeed: 100,
@@ -106,7 +106,7 @@ describe('TrainsController (e2e)', () => {
       jest.spyOn(trainsService, 'update').mockResolvedValue(expectedRailcar as never);
 
       const response = await request(app.getHttpServer())
-        .patch(`/trains/${railcarId}`)
+        .patch(`/trains/${trainId}`)
         .send(updateTrainDto)
         .expect(HttpStatus.OK);
 
@@ -117,17 +117,17 @@ describe('TrainsController (e2e)', () => {
 
   describe('DELETE /trains/:id', () => {
     it('should delete a Train by id', async () => {
-      const railcarId = '1';
+      const trainId = '1';
 
       jest.spyOn(trainsService, 'remove').mockResolvedValue(trainDtoMock as never);
 
       const response = await request(app.getHttpServer())
-        .delete(`/trains/${railcarId}`)
+        .delete(`/trains/${trainId}`)
         .expect(HttpStatus.NO_CONTENT);
 
       expect(response.body).toEqual({});
       expect(response.status).toEqual(204);
-      expect(trainsService.remove).toHaveBeenCalledWith(+railcarId);
+      expect(trainsService.remove).toHaveBeenCalledWith(+trainId);
     });
   });
 });
