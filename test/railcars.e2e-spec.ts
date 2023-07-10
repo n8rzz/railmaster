@@ -46,7 +46,7 @@ describe('RailcarsController (e2e)', () => {
   });
 
   describe('POST /railcars', () => {
-    it('should create a game', async () => {
+    it('should create a Railcar', async () => {
       jest.spyOn(railcarsService, 'create').mockResolvedValue(expectedRailcar as never);
 
       const response = await request(app.getHttpServer())
@@ -62,7 +62,7 @@ describe('RailcarsController (e2e)', () => {
   });
 
   describe('GET /railcars', () => {
-    it('should return an array of games', async () => {
+    it('should return an array of Railcars', async () => {
       const expectedRailcars = [
         railcarMock,
         {
@@ -81,7 +81,7 @@ describe('RailcarsController (e2e)', () => {
   });
 
   describe('GET /railcars/:id', () => {
-    it('should return a game by id', async () => {
+    it('should return a Railcar by id', async () => {
       const railcarId = '1';
 
       jest.spyOn(railcarsService, 'findOne').mockResolvedValue(expectedRailcar as never);
@@ -96,7 +96,7 @@ describe('RailcarsController (e2e)', () => {
   });
 
   describe('PATCH /railcars/:id', () => {
-    it('should update a game by id', async () => {
+    it('should update a Railcar by id', async () => {
       const railcarId = 1;
       const updateRailcarDto: RailcarDto = {
         ...railcarMock,
@@ -120,7 +120,7 @@ describe('RailcarsController (e2e)', () => {
   });
 
   describe('DELETE /railcars/:id', () => {
-    it('should delete a game by id', async () => {
+    it('should delete a Railcar by id', async () => {
       const railcarId = '1';
 
       jest.spyOn(railcarsService, 'remove').mockResolvedValue(railcarMock as never);
