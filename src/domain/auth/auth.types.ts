@@ -1,7 +1,7 @@
 import { User } from '../user/entity/user.entity';
 
 export interface IJwtAccessTokenFields {
-  sub: number;
+  id: number;
   email: string;
 }
 

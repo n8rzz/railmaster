@@ -35,7 +35,7 @@ export class AuthService {
   private _buildAccessTokenPayload(user: User): IJwtAccessTokenFields {
     return {
       email: user.email,
-      sub: user.id,
+      id: user.id,
     };
   }
 

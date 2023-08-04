@@ -16,6 +16,7 @@ export class AuthGuard implements CanActivate {
 
     try {
       request['user'] = await this.jwtService.verifyAsync(token, {
+        // FIXME: change this
         secret: 'Threeve',
       });
     } catch (error) {
