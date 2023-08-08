@@ -23,6 +23,11 @@ class PrimaCreateTrainDto implements Prisma.TrainCreateInput {
   @ApiProperty()
   userId: number;
 }
+
+/**
+ * We expose `#engines` and `3railcars` here as arrays for easy nested creation via
+ * api, these are custom types and not part of the PrismClient
+ */
 export class CreateTrainDto extends PrimaCreateTrainDto {
   @ApiProperty({ required: false })
   engines?: number[];
