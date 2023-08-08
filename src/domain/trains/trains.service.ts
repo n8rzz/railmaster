@@ -50,6 +50,32 @@ export class TrainsService {
     });
   }
 
+  addRailcars(id: number, railcarIds: number[]) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return this._prismaService.train.update({
+      where: { id },
+      data: {
+        railcars: {
+          connect: railcarIds.map((id) => ({ id })),
+        },
+      },
+      include: { engines: true, railcars: true },
+    });
+  }
+
+  removeRailcars(id: number, railcarIds: number[]) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return this._prismaService.train.update({
+      where: { id },
+      data: {
+        railcars: {
+          disconnect: railcarIds.map((id) => ({ id })),
+        },
+      },
+      include: { engines: true, railcars: true },
+    });
+  }
+
   remove(id: number) {
     return this._prismaService.train.delete({ where: { id } });
   }

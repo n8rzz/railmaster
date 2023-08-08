@@ -15,6 +15,7 @@ import { TrainDto } from './dto/train.dto';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiTagName } from '../../swagger/swagger.constants';
 import { AppVersion } from '../../app.constants';
+import { UpdateRailcarsDto } from './dto/update-railcars.dto';
 
 @ApiBearerAuth()
 @ApiTags(ApiTagName.Trains)
@@ -71,5 +72,24 @@ export class TrainsController {
   @HttpCode(204)
   remove(@Param('id') id: string) {
     return this.trainsService.remove(+id);
+  }
+
+  @Post(':id/railcars')
+  @Version(AppVersion.One)
+  @ApiOperation({ summary: 'Add Railcars' })
+  @ApiResponse({ status: 200, description: 'Success', type: TrainDto })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  addRailcars(@Param('id') id: string, @Body() updateRailcarsDto: UpdateRailcarsDto) {
+    return this.trainsService.addRailcars(+id, updateRailcarsDto.railcarIds);
+  }
+
+  @Delete(':id/railcars')
+  @Version(AppVersion.One)
+  @ApiOperation({ summary: 'Remove Railcars' })
+  @ApiResponse({ status: 200, description: 'Success', type: TrainDto })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @HttpCode(204)
+  removeRailcars(@Param('id') id: string, @Body() updateRailcarsDto: UpdateRailcarsDto) {
+    return this.trainsService.addRailcars(+id, updateRailcarsDto.railcarIds);
   }
 }

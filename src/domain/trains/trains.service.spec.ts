@@ -99,6 +99,60 @@ describe('TrainsService', () => {
     });
   });
 
+  describe('addRailcars', () => {
+    it.todo('should add railcars to train');
+    // it('should add railcars to train', async () => {
+    //   const updateTrainDto: TrainDto = {
+    //     ...trainDtoMock,
+    //     maxSpeed: 100,
+    //   };
+    //   const expectedRailcar: TrainDto = {
+    //     ...trainDtoMock,
+    //     maxSpeed: updateTrainDto.maxSpeed,
+    //   };
+    //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    //   const { engines, railcars, ...expectedCallSignature } = expectedRailcar;
+    //
+    //   jest.spyOn(prismaService.train, 'update').mockResolvedValue(expectedRailcar as never);
+    //
+    //   const result = await trainsService.update(trainIdMock, updateTrainDto);
+    //
+    //   expect(result).toEqual(expectedRailcar);
+    //   expect(prismaService.train.update).toHaveBeenCalledWith({
+    //     where: { id: trainIdMock },
+    //     data: expectedCallSignature,
+    //     include: { engines: true, railcars: true },
+    //   });
+    // });
+  });
+
+  describe('removeRailcars', () => {
+    it.todo('should remove railcars from train');
+    // it('should add railcars to train', async () => {
+    //   const updateTrainDto: TrainDto = {
+    //     ...trainDtoMock,
+    //     maxSpeed: 100,
+    //   };
+    //   const expectedRailcar: TrainDto = {
+    //     ...trainDtoMock,
+    //     maxSpeed: updateTrainDto.maxSpeed,
+    //   };
+    //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    //   const { engines, railcars, ...expectedCallSignature } = expectedRailcar;
+    //
+    //   jest.spyOn(prismaService.train, 'update').mockResolvedValue(expectedRailcar as never);
+    //
+    //   const result = await trainsService.update(trainIdMock, updateTrainDto);
+    //
+    //   expect(result).toEqual(expectedRailcar);
+    //   expect(prismaService.train.update).toHaveBeenCalledWith({
+    //     where: { id: trainIdMock },
+    //     data: expectedCallSignature,
+    //     include: { engines: true, railcars: true },
+    //   });
+    // });
+  });
+
   describe('remove', () => {
     it('should delete a train by id', async () => {
       // jest.spyOn(prismaService.train, 'delete').mockResolvedValue({ id as never: trainIdMock });
