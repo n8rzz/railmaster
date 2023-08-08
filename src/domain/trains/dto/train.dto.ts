@@ -1,24 +1,45 @@
-import { CreateTrainDto } from './create-train.dto';
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { EngineDto } from '../../engines/dto/engine.dto';
+import { RailcarDto } from '../../railcars/dto/railcar.dto';
 
-export class TrainDto extends CreateTrainDto {
+export class TrainDto {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
-  id: number;
+  public capacity: number;
 
   @ApiProperty({ required: false })
   createdAt: Date;
 
-  // @IsArray()
-  // @ApiProperty()
-  // engines: EngineDto[];
-  //
-  // @IsArray()
-  // @ApiProperty()
-  // railcars: RailcarDto[];
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  public id: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  public maxSpeed: number;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  public status: string;
+
+  @IsArray()
+  @ApiProperty()
+  public engines: EngineDto[];
+
+  @IsArray()
+  @ApiProperty()
+  public railcars: RailcarDto[];
 
   @ApiProperty({ required: false })
-  updatedAt: Date;
+  public updatedAt: Date;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  public userId: number;
 }

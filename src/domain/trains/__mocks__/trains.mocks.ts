@@ -1,5 +1,7 @@
 import { CreateTrainDto } from '../dto/create-train.dto';
 import { TrainDto } from '../dto/train.dto';
+import { UpdateRailcarsDto } from '../dto/update-railcars.dto';
+import { RailcarDto } from '../../railcars/dto/railcar.dto';
 
 export const createTrainDtoMock: CreateTrainDto = {
   capacity: 100,
@@ -21,4 +23,14 @@ export const trainDtoMock: TrainDto = {
   engines: [],
   railcars: [],
   updatedAt: new Date(),
+};
+
+export const updateRailcarsMock: UpdateRailcarsDto = { railcarIds: [1, 2] };
+export const updateRailcarsResponseMock: TrainDto = {
+  ...trainDtoMock,
+  railcars: [
+    {
+      id: 1,
+    } as RailcarDto,
+  ],
 };
