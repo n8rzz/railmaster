@@ -5,6 +5,8 @@ import { TrainsService } from './trains.service';
 import {
   createTrainDtoMock,
   trainDtoMock,
+  updateEnginesMock,
+  updateEnginesResponseMock,
   updateRailcarsMock,
   updateRailcarsResponseMock,
 } from './__mocks__/trains.mocks';
@@ -96,7 +98,7 @@ describe('TrainsController', () => {
   });
 
   describe('removeRailcars', () => {
-    it('should add railcars to a Train', async () => {
+    it('should remove railcars to a Train', async () => {
       jest.spyOn(service, 'removeRailcars').mockResolvedValue(trainDtoMock as never);
 
       const result = await controller.removeRailcars(trainIdMock, updateRailcarsMock);
@@ -106,6 +108,28 @@ describe('TrainsController', () => {
         +trainIdMock,
         updateRailcarsMock.railcarIds,
       );
+    });
+  });
+
+  describe('addEngines', () => {
+    it('should add engines to a Train', async () => {
+      jest.spyOn(service, 'addEngines').mockResolvedValue(updateEnginesResponseMock as never);
+
+      const result = await controller.addEngines(trainIdMock, updateEnginesMock);
+
+      expect(result).toEqual(updateEnginesResponseMock);
+      expect(service.addEngines).toHaveBeenCalledWith(+trainIdMock, updateEnginesMock.engineIds);
+    });
+  });
+
+  describe('removeEngines', () => {
+    it('should remove engines to a Train', async () => {
+      jest.spyOn(service, 'removeEngines').mockResolvedValue(trainDtoMock as never);
+
+      const result = await controller.removeEngines(trainIdMock, updateEnginesMock);
+
+      expect(result.railcars).toEqual(trainDtoMock.railcars);
+      expect(service.removeEngines).toHaveBeenCalledWith(+trainIdMock, updateEnginesMock.engineIds);
     });
   });
 });

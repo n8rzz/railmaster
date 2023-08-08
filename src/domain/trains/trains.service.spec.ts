@@ -4,6 +4,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import {
   createTrainDtoMock,
   trainDtoMock,
+  updateEnginesMock,
+  updateEnginesResponseMock,
   updateRailcarsMock,
   updateRailcarsResponseMock,
 } from './__mocks__/trains.mocks';
@@ -104,6 +106,19 @@ describe('TrainsService', () => {
     });
   });
 
+  describe('remove', () => {
+    it('should delete a train by id', async () => {
+      jest.spyOn(prismaService.train, 'delete').mockResolvedValue(trainDtoMock as never);
+
+      const result = await trainsService.remove(trainIdMock);
+
+      expect(result).toEqual(trainDtoMock);
+      expect(prismaService.train.delete).toHaveBeenCalledWith({
+        where: { id: trainIdMock },
+      });
+    });
+  });
+
   describe('addRailcars', () => {
     it('should add railcars to train', async () => {
       jest
@@ -144,16 +159,42 @@ describe('TrainsService', () => {
     });
   });
 
-  describe('remove', () => {
-    it('should delete a train by id', async () => {
-      // jest.spyOn(prismaService.train, 'delete').mockResolvedValue({ id as never: trainIdMock });
-      jest.spyOn(prismaService.train, 'delete').mockResolvedValue(trainDtoMock as never);
+  describe('addEngines', () => {
+    it('should add engines to train', async () => {
+      jest
+        .spyOn(prismaService.train, 'update')
+        .mockResolvedValue(updateEnginesResponseMock as never);
 
-      const result = await trainsService.remove(trainIdMock);
+      const result = await trainsService.addEngines(trainIdMock, updateEnginesMock.engineIds);
+
+      expect(result).toEqual(updateEnginesResponseMock);
+      expect(prismaService.train.update).toHaveBeenCalledWith({
+        where: { id: trainIdMock },
+        data: {
+          engines: {
+            connect: [{ id: 1 }, { id: 2 }],
+          },
+        },
+        include: { engines: true, railcars: true },
+      });
+    });
+  });
+
+  describe('removeEngines', () => {
+    it('should remove engines from a train', async () => {
+      jest.spyOn(prismaService.train, 'update').mockResolvedValue(trainDtoMock as never);
+
+      const result = await trainsService.removeEngines(trainIdMock, updateEnginesMock.engineIds);
 
       expect(result).toEqual(trainDtoMock);
-      expect(prismaService.train.delete).toHaveBeenCalledWith({
+      expect(prismaService.train.update).toHaveBeenCalledWith({
         where: { id: trainIdMock },
+        data: {
+          engines: {
+            disconnect: [{ id: 1 }, { id: 2 }],
+          },
+        },
+        include: { engines: true, railcars: true },
       });
     });
   });

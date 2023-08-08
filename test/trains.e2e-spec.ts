@@ -9,6 +9,8 @@ import { TrainsService } from '../src/domain/trains/trains.service';
 import {
   createTrainDtoMock,
   trainDtoMock,
+  updateEnginesMock,
+  updateEnginesResponseMock,
   updateRailcarsMock,
   updateRailcarsResponseMock,
 } from '../src/domain/trains/__mocks__/trains.mocks';
@@ -155,6 +157,23 @@ describe('TrainsController (e2e)', () => {
         +trainId,
         updateRailcarsMock.railcarIds,
       );
+    });
+  });
+
+  describe('POST /trains/:id/engines', () => {
+    it('should add engine associations to Train', async () => {
+      const trainId = '1';
+
+      jest.spyOn(trainsService, 'addEngines').mockResolvedValue(updateEnginesResponseMock as never);
+
+      const response = await request(app.getHttpServer())
+        .post(`/trains/${trainId}/engines`)
+        .send(updateEnginesMock)
+        .expect(HttpStatus.CREATED);
+
+      expect(response.body.engines).toEqual(updateEnginesResponseMock.railcars);
+      expect(response.status).toEqual(201);
+      expect(trainsService.addEngines).toHaveBeenCalledWith(+trainId, updateEnginesMock.engineIds);
     });
   });
 });
