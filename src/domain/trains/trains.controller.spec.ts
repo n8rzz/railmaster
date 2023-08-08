@@ -2,7 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaModule } from '../prisma/prisma.module';
 import { TrainsController } from './trains.controller';
 import { TrainsService } from './trains.service';
-import { createTrainDtoMock, trainDtoMock } from './__mocks__/trains.mocks';
+import {
+  createTrainDtoMock,
+  trainDtoMock,
+  updateRailcarsMock,
+  updateRailcarsResponseMock,
+} from './__mocks__/trains.mocks';
 
 describe('TrainsController', () => {
   const trainIdMock = '1';
@@ -76,6 +81,31 @@ describe('TrainsController', () => {
 
       expect(result).toBeUndefined();
       expect(service.remove).toHaveBeenCalledWith(+trainIdMock);
+    });
+  });
+
+  describe('addRailcars', () => {
+    it('should add railcars to a Train', async () => {
+      jest.spyOn(service, 'addRailcars').mockResolvedValue(updateRailcarsResponseMock as never);
+
+      const result = await controller.addRailcars(trainIdMock, updateRailcarsMock);
+
+      expect(result).toEqual(updateRailcarsResponseMock);
+      expect(service.addRailcars).toHaveBeenCalledWith(+trainIdMock, updateRailcarsMock.railcarIds);
+    });
+  });
+
+  describe('removeRailcars', () => {
+    it('should add railcars to a Train', async () => {
+      jest.spyOn(service, 'removeRailcars').mockResolvedValue(trainDtoMock as never);
+
+      const result = await controller.removeRailcars(trainIdMock, updateRailcarsMock);
+
+      expect(result.railcars).toEqual(trainDtoMock.railcars);
+      expect(service.removeRailcars).toHaveBeenCalledWith(
+        +trainIdMock,
+        updateRailcarsMock.railcarIds,
+      );
     });
   });
 });

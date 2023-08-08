@@ -6,7 +6,12 @@ import { JwtAuthGuard } from '../src/domain/auth/jwt-auth.guard';
 import { AuthGuardMock } from '../src/domain/auth/__mocks__/auth.guard.mock';
 import { TrainDto } from '../src/domain/trains/dto/train.dto';
 import { TrainsService } from '../src/domain/trains/trains.service';
-import { createTrainDtoMock, trainDtoMock } from '../src/domain/trains/__mocks__/trains.mocks';
+import {
+  createTrainDtoMock,
+  trainDtoMock,
+  updateRailcarsMock,
+  updateRailcarsResponseMock,
+} from '../src/domain/trains/__mocks__/trains.mocks';
 
 describe('TrainsController (e2e)', () => {
   const currentDate = new Date();
@@ -128,6 +133,28 @@ describe('TrainsController (e2e)', () => {
       expect(response.body).toEqual({});
       expect(response.status).toEqual(204);
       expect(trainsService.remove).toHaveBeenCalledWith(+trainId);
+    });
+  });
+
+  describe('POST /trains/:id/railcars', () => {
+    it('should add railcar associations to Train', async () => {
+      const trainId = '1';
+
+      jest
+        .spyOn(trainsService, 'addRailcars')
+        .mockResolvedValue(updateRailcarsResponseMock as never);
+
+      const response = await request(app.getHttpServer())
+        .post(`/trains/${trainId}/railcars`)
+        .send(updateRailcarsMock)
+        .expect(HttpStatus.CREATED);
+
+      expect(response.body.railcars).toEqual(updateRailcarsResponseMock.railcars);
+      expect(response.status).toEqual(201);
+      expect(trainsService.addRailcars).toHaveBeenCalledWith(
+        +trainId,
+        updateRailcarsMock.railcarIds,
+      );
     });
   });
 });

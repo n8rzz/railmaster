@@ -90,6 +90,6 @@ export class TrainsController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @HttpCode(204)
   removeRailcars(@Param('id') id: string, @Body() updateRailcarsDto: UpdateRailcarsDto) {
-    return this.trainsService.addRailcars(+id, updateRailcarsDto.railcarIds);
+    return this.trainsService.removeRailcars(+id, updateRailcarsDto.railcarIds);
   }
 }
