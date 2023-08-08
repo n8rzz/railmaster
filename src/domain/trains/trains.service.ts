@@ -50,8 +50,35 @@ export class TrainsService {
     });
   }
 
+  remove(id: number) {
+    return this._prismaService.train.delete({ where: { id } });
+  }
+
+  addEngines(id: number, engineIds: number[]) {
+    return this._prismaService.train.update({
+      where: { id },
+      data: {
+        engines: {
+          connect: engineIds.map((id) => ({ id })),
+        },
+      },
+      include: { engines: true, railcars: true },
+    });
+  }
+
+  removeEngines(id: number, engineIds: number[]) {
+    return this._prismaService.train.update({
+      where: { id },
+      data: {
+        engines: {
+          disconnect: engineIds.map((id) => ({ id })),
+        },
+      },
+      include: { engines: true, railcars: true },
+    });
+  }
+
   addRailcars(id: number, railcarIds: number[]) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return this._prismaService.train.update({
       where: { id },
       data: {
@@ -64,7 +91,6 @@ export class TrainsService {
   }
 
   removeRailcars(id: number, railcarIds: number[]) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return this._prismaService.train.update({
       where: { id },
       data: {
@@ -74,9 +100,5 @@ export class TrainsService {
       },
       include: { engines: true, railcars: true },
     });
-  }
-
-  remove(id: number) {
-    return this._prismaService.train.delete({ where: { id } });
   }
 }

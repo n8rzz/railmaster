@@ -171,7 +171,7 @@ describe('TrainsController (e2e)', () => {
         .send(updateEnginesMock)
         .expect(HttpStatus.CREATED);
 
-      expect(response.body.engines).toEqual(updateEnginesResponseMock.railcars);
+      expect(response.body.engines).toEqual(updateEnginesResponseMock.engines);
       expect(response.status).toEqual(201);
       expect(trainsService.addEngines).toHaveBeenCalledWith(+trainId, updateEnginesMock.engineIds);
     });

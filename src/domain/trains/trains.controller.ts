@@ -16,6 +16,7 @@ import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@ne
 import { ApiTagName } from '../../swagger/swagger.constants';
 import { AppVersion } from '../../app.constants';
 import { UpdateRailcarsDto } from './dto/update-railcars.dto';
+import { UpdateEnginesDto } from './dto/update-engines.dto';
 
 @ApiBearerAuth()
 @ApiTags(ApiTagName.Trains)
@@ -72,6 +73,25 @@ export class TrainsController {
   @HttpCode(204)
   remove(@Param('id') id: string) {
     return this.trainsService.remove(+id);
+  }
+
+  @Post(':id/engines')
+  @Version(AppVersion.One)
+  @ApiOperation({ summary: 'Add Engines' })
+  @ApiResponse({ status: 200, description: 'Success', type: TrainDto })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  addEngines(@Param('id') id: string, @Body() updateEnginesDto: UpdateEnginesDto) {
+    return this.trainsService.addEngines(+id, updateEnginesDto.engineIds);
+  }
+
+  @Delete(':id/engines')
+  @Version(AppVersion.One)
+  @ApiOperation({ summary: 'Remove Engines' })
+  @ApiResponse({ status: 200, description: 'Success', type: TrainDto })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @HttpCode(204)
+  removeEngines(@Param('id') id: string, @Body() updateEnginesDto: UpdateEnginesDto) {
+    return this.trainsService.removeEngines(+id, updateEnginesDto.engineIds);
   }
 
   @Post(':id/railcars')
