@@ -13,4 +13,9 @@ export class EngineDto extends CreateEngineDto {
 
   @ApiProperty({ required: false })
   updatedAt: Date;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  locationId: number;
 }

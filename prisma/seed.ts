@@ -93,7 +93,7 @@ async function createEngines(user: UserDto, locations: LocationDto[]): Promise<E
         power: 4000,
         status: 'active',
         type: 'Diesel/Electric',
-        // locationId: locations[0].id,
+        locationId: locations[0].id,
         userId: user.id,
       },
     });
