@@ -5,6 +5,6 @@ export enum ApiTagName {
   Health = 'health',
   Locations = 'locations',
   Railcars = 'railcars',
-  Trains = 'Trains',
+  Trains = 'trains',
   Users = 'users',
 }
