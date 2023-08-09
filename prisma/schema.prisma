@@ -59,6 +59,13 @@ model Engine {
   trainId        Int?
 }
 
+model Location {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Train {
   id        Int       @id @default(autoincrement())
   capacity  Int

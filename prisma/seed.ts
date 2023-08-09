@@ -1,6 +1,7 @@
-import { Engine, Game, PrismaClient, Railcar, Train, User } from '@prisma/client';
+import { Engine, Game, Location, PrismaClient, Railcar, Train, User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { UserDto } from '../src/domain/user/dto/user.dto';
+import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
@@ -20,6 +21,25 @@ async function createUsers(): Promise<{ bill: UserDto }> {
   return {
     bill,
   };
+}
+
+async function createLocations(): Promise<Location[]> {
+  const locations: Location[] = [];
+  const locationCount = 10;
+
+  for (let i = 0; i < locationCount; i++) {
+    const locationName = faker.location.city();
+    const createdLocation = await prisma.location.create({
+      data: {
+        name: locationName,
+      },
+    });
+
+    locations.push(createdLocation);
+    process.stdout.write('.');
+  }
+
+  return locations;
 }
 
 async function createGames(user: UserDto): Promise<Game[]> {
@@ -101,7 +121,11 @@ async function createTrains(bill: User, railcars: Railcar[], engines: Engine[]):
 }
 
 async function main(): Promise<void> {
+  console.log('');
+  console.log('Seeding Models:');
+  console.log('');
   const users = await createUsers();
+  const locations = await createLocations();
 
   const [_, railcars, engines] = await Promise.all([
     createGames(users.bill),
@@ -114,6 +138,7 @@ async function main(): Promise<void> {
   console.log('\n=====================================');
   console.log('Created Seeds:');
   console.log(`- Users: ${Object.keys(users).length}`);
+  console.log(`- Locations: ${locations.length}`);
   console.log(`- Railcars: ${railcars.length}`);
   console.log(`- Engines: ${engines.length}`);
   console.log(`- Trains: ${trains.length}`);
