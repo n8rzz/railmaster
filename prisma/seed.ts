@@ -43,15 +43,12 @@ async function createRailcars(user: UserDto): Promise<Railcar[]> {
     const isOdd = i % 2 === 0;
     const capacityUnit = isOdd ? 'gal' : 'lbs';
     const capacityValue = Math.max(i * 10000, 50000);
-    const type = isOdd ? 'tank' : 'boxcar';
-
-    const createdRailcar = await prisma.railcar.upsert({
-      where: { id: user.id },
-      update: {},
-      create: {
+    const railcarType = isOdd ? 'tank' : 'boxcar';
+    const createdRailcar = await prisma.railcar.create({
+      data: {
         capacity_unit: capacityUnit,
         capacity_value: capacityValue,
-        type: type,
+        type: railcarType,
         userId: user.id,
       },
     });
@@ -68,10 +65,8 @@ async function createEngines(user: UserDto): Promise<Engine[]> {
   const engineCount = 10;
 
   for (let i = 0; i < engineCount; i++) {
-    const createdEngine = await prisma.engine.upsert({
-      where: { id: user.id },
-      update: {},
-      create: {
+    const createdEngine = await prisma.engine.create({
+      data: {
         fuelEfficiency: 10,
         power: 4000,
         status: 'active',
