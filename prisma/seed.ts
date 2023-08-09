@@ -1,6 +1,7 @@
-import { Engine, Game, PrismaClient, Railcar, Train, User } from '@prisma/client';
+import { Engine, Game, Location, PrismaClient, Railcar, Train, User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { UserDto } from '../src/domain/user/dto/user.dto';
+import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
@@ -17,11 +18,28 @@ async function createUsers(): Promise<{ bill: UserDto }> {
     },
   });
 
-  console.log('Users:\n', bill);
-
   return {
     bill,
   };
+}
+
+async function createLocations(): Promise<Location[]> {
+  const locations: Location[] = [];
+  const locationCount = 10;
+
+  for (let i = 0; i < locationCount; i++) {
+    const locationName = faker.location.city();
+    const createdLocation = await prisma.location.create({
+      data: {
+        name: locationName,
+      },
+    });
+
+    locations.push(createdLocation);
+    process.stdout.write('.');
+  }
+
+  return locations;
 }
 
 async function createGames(user: UserDto): Promise<Game[]> {
@@ -34,55 +52,58 @@ async function createGames(user: UserDto): Promise<Game[]> {
     },
   });
 
-  console.log('');
-  console.log('============= =============');
-  console.log('');
-  console.log('GAMES:\n', game);
-
   return [game];
 }
 
 async function createRailcars(user: UserDto): Promise<Railcar[]> {
-  const railcar = await prisma.railcar.upsert({
-    where: { id: user.id },
-    update: {},
-    create: {
-      capacity_unit: 'gal',
-      capacity_value: 250000,
-      type: 'tank',
-      userId: user.id,
-    },
-  });
+  const railcars = [];
+  const railcarCount = 10;
 
-  console.log('');
-  console.log('============= =============');
-  console.log('');
-  console.log('RAILCARS:\n', railcar);
+  for (let i = 0; i < railcarCount; i++) {
+    const isOdd = i % 2 === 0;
+    const capacityUnit = isOdd ? 'gal' : 'lbs';
+    const capacityValue = Math.max(i * 10000, 50000);
+    const railcarType = isOdd ? 'tank' : 'boxcar';
+    const createdRailcar = await prisma.railcar.create({
+      data: {
+        capacity_unit: capacityUnit,
+        capacity_value: capacityValue,
+        type: railcarType,
+        userId: user.id,
+      },
+    });
 
-  return [railcar];
+    railcars.push(createdRailcar);
+    process.stdout.write('.');
+  }
+
+  return railcars;
 }
 
 async function createEngines(user: UserDto): Promise<Engine[]> {
-  const engine = await prisma.engine.upsert({
-    where: { id: user.id },
-    update: {},
-    create: {
-      fuelEfficiency: 10,
-      power: 4000,
-      status: 'active',
-      type: 'Diesel/Electric',
-      userId: user.id,
-    },
-  });
+  const engines = [];
+  const engineCount = 10;
 
-  console.log('');
-  console.log('============= =============');
-  console.log('');
-  console.log('ENGINES:\n', engine);
+  for (let i = 0; i < engineCount; i++) {
+    const createdEngine = await prisma.engine.create({
+      data: {
+        fuelEfficiency: 10,
+        power: 4000,
+        status: 'active',
+        type: 'Diesel/Electric',
+        userId: user.id,
+      },
+    });
 
-  return [engine];
+    engines.push(createdEngine);
+    process.stdout.write('.');
+  }
+
+  return engines;
 }
+
 async function createTrains(bill: User, railcars: Railcar[], engines: Engine[]): Promise<Train[]> {
+  const trains = [];
   const train = await prisma.train.upsert({
     where: { id: bill.id },
     update: {},
@@ -93,24 +114,37 @@ async function createTrains(bill: User, railcars: Railcar[], engines: Engine[]):
     },
   });
 
-  console.log('');
-  console.log('============= =============');
-  console.log('');
-  console.log('TRAINS:\n', train);
+  trains.push(train);
+  process.stdout.write('.');
 
-  return [train];
+  return trains;
 }
 
 async function main(): Promise<void> {
-  const { bill } = await createUsers();
+  console.log('');
+  console.log('Seeding Models:');
+  console.log('');
+  const users = await createUsers();
+  const locations = await createLocations();
 
   const [_, railcars, engines] = await Promise.all([
-    createGames(bill),
-    createRailcars(bill),
-    createEngines(bill),
+    createGames(users.bill),
+    createRailcars(users.bill),
+    createEngines(users.bill),
   ]);
-  await createTrains(bill, railcars, engines);
+  const trains = await createTrains(users.bill, railcars, engines);
+
+  console.log('');
+  console.log('\n=====================================');
+  console.log('Created Seeds:');
+  console.log(`- Users: ${Object.keys(users).length}`);
+  console.log(`- Locations: ${locations.length}`);
+  console.log(`- Railcars: ${railcars.length}`);
+  console.log(`- Engines: ${engines.length}`);
+  console.log(`- Trains: ${trains.length}`);
+  console.log('=====================================\n');
 }
+
 main()
   .then(async () => prisma.$disconnect())
   .catch(async (e) => {

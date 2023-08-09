@@ -11,6 +11,7 @@ import { HealthModule } from './domain/health/health.module';
 import { RailcarsModule } from './domain/railcars/railcars.module';
 import { EnginesModule } from './domain/engines/engines.module';
 import { TrainsModule } from './domain/trains/trains.module';
+import { LocationsModule } from './domain/locations/locations.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { TrainsModule } from './domain/trains/trains.module';
     RailcarsModule,
     EnginesModule,
     TrainsModule,
+    LocationsModule,
   ],
   providers: [
     {
