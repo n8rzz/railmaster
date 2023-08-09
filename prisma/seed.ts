@@ -2,6 +2,7 @@ import { Engine, Game, Location, PrismaClient, Railcar, Train, User } from '@pri
 import * as bcrypt from 'bcrypt';
 import { UserDto } from '../src/domain/user/dto/user.dto';
 import { faker } from '@faker-js/faker';
+import { LocationDto } from '../src/domain/locations/dto/location.dto';
 
 const prisma = new PrismaClient();
 
@@ -55,7 +56,7 @@ async function createGames(user: UserDto): Promise<Game[]> {
   return [game];
 }
 
-async function createRailcars(user: UserDto): Promise<Railcar[]> {
+async function createRailcars(user: UserDto, locations: LocationDto[]): Promise<Railcar[]> {
   const railcars = [];
   const railcarCount = 10;
 
@@ -69,6 +70,7 @@ async function createRailcars(user: UserDto): Promise<Railcar[]> {
         capacity_unit: capacityUnit,
         capacity_value: capacityValue,
         type: railcarType,
+        // locationId: locations[0].id,
         userId: user.id,
       },
     });
@@ -80,7 +82,7 @@ async function createRailcars(user: UserDto): Promise<Railcar[]> {
   return railcars;
 }
 
-async function createEngines(user: UserDto): Promise<Engine[]> {
+async function createEngines(user: UserDto, locations: LocationDto[]): Promise<Engine[]> {
   const engines = [];
   const engineCount = 10;
 
@@ -91,6 +93,7 @@ async function createEngines(user: UserDto): Promise<Engine[]> {
         power: 4000,
         status: 'active',
         type: 'Diesel/Electric',
+        // locationId: locations[0].id,
         userId: user.id,
       },
     });
@@ -102,7 +105,12 @@ async function createEngines(user: UserDto): Promise<Engine[]> {
   return engines;
 }
 
-async function createTrains(bill: User, railcars: Railcar[], engines: Engine[]): Promise<Train[]> {
+async function createTrains(
+  bill: User,
+  railcars: Railcar[],
+  engines: Engine[],
+  locations: LocationDto[],
+): Promise<Train[]> {
   const trains = [];
   const train = await prisma.train.upsert({
     where: { id: bill.id },
@@ -111,6 +119,7 @@ async function createTrains(bill: User, railcars: Railcar[], engines: Engine[]):
       capacity: 100,
       maxSpeed: 80,
       status: 'parked',
+      locationId: locations[0].id,
     },
   });
 
@@ -124,15 +133,15 @@ async function main(): Promise<void> {
   console.log('');
   console.log('Seeding Models:');
   console.log('');
+
   const users = await createUsers();
   const locations = await createLocations();
-
   const [_, railcars, engines] = await Promise.all([
     createGames(users.bill),
-    createRailcars(users.bill),
-    createEngines(users.bill),
+    createRailcars(users.bill, locations),
+    createEngines(users.bill, locations),
   ]);
-  const trains = await createTrains(users.bill, railcars, engines);
+  const trains = await createTrains(users.bill, railcars, engines, locations);
 
   console.log('');
   console.log('\n=====================================');
