@@ -15,7 +15,6 @@ import { RailcarDto } from './dto/railcar.dto';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiTagName } from '../../swagger/swagger.constants';
 import { AppVersion } from '../../app.constants';
-import { GameDto } from '../game/dto/game.dto';
 import { Prisma } from '@prisma/client';
 
 @ApiBearerAuth()
@@ -53,7 +52,7 @@ export class RailcarsController {
   @Patch(':id')
   @Version(AppVersion.One)
   @ApiOperation({ summary: 'Update Railcar' })
-  @ApiResponse({ status: 200, description: 'Success', type: GameDto })
+  @ApiResponse({ status: 200, description: 'Success', type: RailcarDto })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   update(@Param('id') id: string, @Body() updateRailcarDto: RailcarDto) {
     return this._railcarsService.update(+id, updateRailcarDto);
