@@ -42,7 +42,7 @@ describe('TrainsService', () => {
           engines: { connect: [] },
           railcars: { connect: [] },
         },
-        include: { engines: true, railcars: true },
+        include: { engines: true, railcars: true, location: true },
       });
     });
   });
@@ -75,7 +75,7 @@ describe('TrainsService', () => {
       expect(result).toEqual(trainDtoMock);
       expect(prismaService.train.findUnique).toHaveBeenCalledWith({
         where: { id: trainIdMock },
-        include: { engines: true, railcars: true },
+        include: { engines: true, railcars: true, location: true },
       });
     });
   });
@@ -101,7 +101,7 @@ describe('TrainsService', () => {
       expect(prismaService.train.update).toHaveBeenCalledWith({
         where: { id: trainIdMock },
         data: expectedCallSignature,
-        include: { engines: true, railcars: true },
+        include: { engines: true, railcars: true, location: true },
       });
     });
   });
@@ -135,7 +135,7 @@ describe('TrainsService', () => {
             connect: [{ id: 1 }, { id: 2 }],
           },
         },
-        include: { engines: true, railcars: true },
+        include: { engines: true, railcars: true, location: true },
       });
     });
   });
@@ -154,7 +154,7 @@ describe('TrainsService', () => {
             disconnect: [{ id: 1 }, { id: 2 }],
           },
         },
-        include: { engines: true, railcars: true },
+        include: { engines: true, railcars: true, location: true },
       });
     });
   });
@@ -175,7 +175,7 @@ describe('TrainsService', () => {
             connect: [{ id: 1 }, { id: 2 }],
           },
         },
-        include: { engines: true, railcars: true },
+        include: { engines: true, railcars: true, location: true },
       });
     });
   });
@@ -194,7 +194,7 @@ describe('TrainsService', () => {
             disconnect: [{ id: 1 }, { id: 2 }],
           },
         },
-        include: { engines: true, railcars: true },
+        include: { engines: true, railcars: true, location: true },
       });
     });
   });

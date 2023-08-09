@@ -21,6 +21,11 @@ class PrimaCreateTrainDto implements Prisma.TrainCreateInput {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
+  locationId: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
   userId: number;
 }
 

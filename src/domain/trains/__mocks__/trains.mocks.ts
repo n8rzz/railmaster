@@ -4,6 +4,7 @@ import { UpdateRailcarsDto } from '../dto/update-railcars.dto';
 import { RailcarDto } from '../../railcars/dto/railcar.dto';
 import { UpdateEnginesDto } from '../dto/update-engines.dto';
 import { EngineDto } from '../../engines/dto/engine.dto';
+import { locationDtoMock } from '../../locations/__mocks__/location.mocks';
 
 const now = new Date();
 
@@ -11,6 +12,7 @@ export const createTrainDtoMock: CreateTrainDto = {
   capacity: 100,
   maxSpeed: 80,
   status: 'parked',
+  locationId: locationDtoMock.id,
   userId: 1,
 };
 

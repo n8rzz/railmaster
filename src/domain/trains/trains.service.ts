@@ -22,20 +22,20 @@ export class TrainsService {
           connect: railcarIds,
         },
       },
-      include: { engines: true, railcars: true },
+      include: { engines: true, railcars: true, location: true },
     });
   }
 
   findAll() {
     return this._prismaService.train.findMany({
-      include: { engines: true, railcars: true },
+      include: { engines: true, railcars: true, location: true },
     });
   }
 
   findOne(id: number) {
     return this._prismaService.train.findUnique({
       where: { id },
-      include: { engines: true, railcars: true },
+      include: { engines: true, railcars: true, location: true },
     });
   }
 
@@ -46,7 +46,7 @@ export class TrainsService {
     return this._prismaService.train.update({
       where: { id },
       data: { ...trainToUpdate },
-      include: { engines: true, railcars: true },
+      include: { engines: true, railcars: true, location: true },
     });
   }
 
@@ -62,7 +62,7 @@ export class TrainsService {
           connect: engineIds.map((id) => ({ id })),
         },
       },
-      include: { engines: true, railcars: true },
+      include: { engines: true, railcars: true, location: true },
     });
   }
 
@@ -74,7 +74,7 @@ export class TrainsService {
           disconnect: engineIds.map((id) => ({ id })),
         },
       },
-      include: { engines: true, railcars: true },
+      include: { engines: true, railcars: true, location: true },
     });
   }
 
@@ -86,7 +86,7 @@ export class TrainsService {
           connect: railcarIds.map((id) => ({ id })),
         },
       },
-      include: { engines: true, railcars: true },
+      include: { engines: true, railcars: true, location: true },
     });
   }
 
@@ -98,7 +98,7 @@ export class TrainsService {
           disconnect: railcarIds.map((id) => ({ id })),
         },
       },
-      include: { engines: true, railcars: true },
+      include: { engines: true, railcars: true, location: true },
     });
   }
 }
