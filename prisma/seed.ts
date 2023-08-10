@@ -70,7 +70,7 @@ async function createRailcars(user: UserDto, locations: LocationDto[]): Promise<
         capacity_unit: capacityUnit,
         capacity_value: capacityValue,
         type: railcarType,
-        // locationId: locations[0].id,
+        locationId: locations[0].id,
         userId: user.id,
       },
     });

@@ -16,6 +16,7 @@ describe('RailcarsController (e2e)', () => {
     capacity_value: 10000,
     trainId: undefined,
     type: 'tank',
+    locationId: 1,
     userId: 1,
   };
   const expectedRailcar: RailcarDto = {

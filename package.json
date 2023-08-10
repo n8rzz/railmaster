@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "nest build",
+    "db:generate": "prisma generate",
     "db:reset": "prisma db push --force-reset",
     "db:seed": "prisma db seed",
     "db:migrate": "prisma migrate dev --name",

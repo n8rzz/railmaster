@@ -29,7 +29,7 @@ export class CreateEngineDto implements Prisma.EngineCreateInput {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
-  locationId: number;
+  public locationId: number;
 
   @IsNumber()
   @IsNotEmpty()

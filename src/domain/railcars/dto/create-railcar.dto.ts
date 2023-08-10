@@ -24,5 +24,10 @@ export class CreateRailcarDto implements Prisma.RailcarCreateInput {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
+  public locationId: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
   public userId: number;
 }
